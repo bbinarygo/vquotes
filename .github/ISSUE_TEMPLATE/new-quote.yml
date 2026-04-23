@@ -1,0 +1,85 @@
+name: "[VN] Đề xuất trích dẫn mới / [EN] Suggest new quote"
+description: Thêm một trích dẫn mới vào kho dữ liệu / Add a new quote to the database
+labels: ["quote-submission"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Cảm ơn bạn đã đóng góp! / Thank you for contributing!
+        Mọi trích dẫn đều cần có nguồn xác minh. / All quotes require a verifiable source.
+
+  - type: textarea
+    id: quote-vi
+    attributes:
+      label: Trích dẫn tiếng Việt / Vietnamese quote
+      description: Dán nguyên văn tiếng Việt / Paste the original Vietnamese text
+    validations:
+      required: true
+
+  - type: textarea
+    id: quote-en
+    attributes:
+      label: Bản dịch tiếng Anh / English translation
+      description: Bản dịch chính xác nếu có / Accurate translation if available
+
+  - type: input
+    id: author
+    attributes:
+      label: Tác giả / Author
+      description: Tên tác giả, đạo diễn, hoặc nguồn phát biểu / Name of author, director, or speaker
+    validations:
+      required: true
+
+  - type: input
+    id: source
+    attributes:
+      label: Nguồn / Source
+      description: Tên phim, sách, bài thơ, link nếu có / Film title, book, poem, link if available
+    validations:
+      required: true
+
+  - type: dropdown
+    id: category
+    attributes:
+      label: Thể loại / Category
+      multiple: true
+      options:
+        - film
+        - series
+        - poem
+        - song
+        - novel
+        - proverb
+        - speech
+        - interview
+        - book
+        - famous-person
+        - government-official
+        - military
+        - religious
+        - athlete
+        - entrepreneur
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: Tags (tùy chọn / optional)
+      description: "Phân cách bằng dấu phẩy, viết thường / Comma-separated, lowercase. Ví dụ: love, wisdom, war"
+
+  - type: input
+    id: year
+    attributes:
+      label: Năm / Year
+      description: Năm phát hành hoặc phát biểu / Year of publication or speech
+
+  - type: checkboxes
+    id: verification
+    attributes:
+      label: Xác nhận / Confirmation
+      options:
+        - label: "Tôi đã kiểm tra nguồn và nó có thể xác minh công khai / I have verified the source and it is publicly verifiable"
+          required: true
+        - label: "Trích dẫn này không vi phạm pháp luật Việt Nam / This quote does not violate Vietnamese law"
+          required: true

@@ -1,0 +1,36 @@
+name: "[VN] Báo lỗi trích dẫn / [EN] Report quote error"
+description: Báo cáo lỗi về trích dẫn sai, dịch sai, hoặc nội dung không phù hợp
+labels: ["error-report"]
+body:
+  - type: input
+    id: quote-id
+    attributes:
+      label: ID hoặc link trích dẫn / Quote ID or URL
+      description: "Ví dụ: film-nguyen-hong-sen-canh-dong-hoang-001 hoặc https://vquotes.vercel.app/quote/..."
+    validations:
+      required: true
+
+  - type: dropdown
+    id: error-type
+    attributes:
+      label: Loại lỗi / Error type
+      options:
+        - Sai tác giả / Wrong author (misattribution)
+        - Dịch sai / Bad translation
+        - Nguồn sai / Wrong source
+        - Nội dung không phù hợp / Offensive content
+        - Khác / Other
+    validations:
+      required: true
+
+  - type: textarea
+    id: correct-info
+    attributes:
+      label: Thông tin đúng (nếu biết) / Correct information (if known)
+      description: Nguồn chính xác, tác giả đúng, v.v. / Correct source, author, etc.
+
+  - type: input
+    id: correct-source
+    attributes:
+      label: Link nguồn đúng / Link to correct source
+      description: Link đến nguồn xác minh / Link to verifiable source
