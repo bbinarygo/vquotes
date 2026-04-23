@@ -1,12 +1,6 @@
 'use client';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { QuoteCategory } from '@/types/quote';
-
-const CATEGORIES: QuoteCategory[] = [
-  'film','series','poem','song','novel','proverb',
-  'speech','interview','book','famous-person',
-  'government-official','military','religious','athlete','entrepreneur'
-];
+import { CATEGORY_LIST } from '@/constants/categories';
 
 const SORT_OPTIONS = [
   { value: 'newest', label: 'Mới nhất / Newest' },
@@ -27,17 +21,21 @@ export default function FilterBar() {
 
   return (
     <div className="flex flex-wrap gap-3 items-center">
+      <label className="sr-only" htmlFor="filter-category">Thể loại</label>
       <select
+        id="filter-category"
         value={params.get('category') ?? ''}
         onChange={e => update('category', e.target.value)}
         className="border rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-amber-400"
       >
         <option value="">Tất cả thể loại / All categories</option>
-        {CATEGORIES.map(c => (
-          <option key={c} value={c}>{c}</option>
+        {CATEGORY_LIST.map(c => (
+          <option key={c.value} value={c.value}>{c.labelVi} / {c.label}</option>
         ))}
       </select>
+      <label className="sr-only" htmlFor="filter-sort">Sắp xếp</label>
       <select
+        id="filter-sort"
         value={params.get('sort') ?? 'newest'}
         onChange={e => update('sort', e.target.value)}
         className="border rounded-lg px-3 py-2 text-sm text-gray-700 focus:outline-none focus:border-amber-400"
@@ -48,6 +46,7 @@ export default function FilterBar() {
       </select>
       <input
         type="text"
+        aria-label="Tìm kiếm trích dẫn"
         defaultValue={params.get('q') ?? ''}
         placeholder="Tìm kiếm... / Search..."
         onKeyDown={e => { if (e.key === 'Enter') update('q', (e.target as HTMLInputElement).value); }}
