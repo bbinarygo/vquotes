@@ -29,7 +29,13 @@ async function BrowseContent({ searchParams }: BrowseProps) {
       quote.author.toLowerCase().includes(lower)
     );
   }
-  if (sort === 'newest') {
+
+  // Sort the full filtered set before paginating
+  let allVoteCounts: Record<string, number> = {};
+  if (sort === 'most-voted') {
+    allVoteCounts = await getVoteCounts(quotes.map(quote => quote.id));
+    quotes = quotes.sort((a, b) => (allVoteCounts[b.id] ?? 0) - (allVoteCounts[a.id] ?? 0));
+  } else {
     quotes = quotes.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
   }
 
@@ -37,11 +43,10 @@ async function BrowseContent({ searchParams }: BrowseProps) {
   const totalPages = Math.ceil(total / PAGE_SIZE);
   const paginated = quotes.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
-  const voteCounts = await getVoteCounts(paginated.map(quote => quote.id));
-
-  if (sort === 'most-voted') {
-    paginated.sort((a, b) => (voteCounts[b.id] ?? 0) - (voteCounts[a.id] ?? 0));
-  }
+  // For most-voted, counts are already fetched; for newest, fetch just the page
+  const voteCounts = sort === 'most-voted'
+    ? Object.fromEntries(paginated.map(q => [q.id, allVoteCounts[q.id] ?? 0]))
+    : await getVoteCounts(paginated.map(quote => quote.id));
 
   return (
     <div className="space-y-6">

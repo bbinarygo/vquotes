@@ -12,7 +12,7 @@ interface QuotePageProps {
   params: Promise<{ id: string }>;
 }
 
-const SITE_URL = 'https://vquotes.vercel.app';
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://vquotes.vercel.app';
 const REPORT_FORM_URL = 'https://docs.google.com/forms/d/e/YOUR_FORM_ID/viewform';
 
 export default async function QuotePage({ params }: QuotePageProps) {
