@@ -11,7 +11,7 @@ export const CATEGORY_LIST: { value: QuoteCategory; label: string; labelVi: stri
   { value: 'interview', label: 'Interview', labelVi: 'Phỏng vấn', emoji: '💬' },
   { value: 'book', label: 'Book', labelVi: 'Sách', emoji: '📖' },
   { value: 'famous-person', label: 'Famous Person', labelVi: 'Người nổi tiếng', emoji: '⭐' },
-  { value: 'government-official', label: 'Official', labelVi: 'Quan chức', emoji: '🏛️' },
+  { value: 'government-official', label: 'Official', labelVi: 'Chính trị gia', emoji: '🏛️' },
   { value: 'military', label: 'Military', labelVi: 'Quân sự', emoji: '⚔️' },
   { value: 'religious', label: 'Religious', labelVi: 'Tôn giáo', emoji: '🕊️' },
   { value: 'athlete', label: 'Athlete', labelVi: 'Vận động viên', emoji: '🏆' },
