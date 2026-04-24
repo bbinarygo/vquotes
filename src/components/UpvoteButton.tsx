@@ -1,6 +1,8 @@
 'use client';
 import { useState } from 'react';
 import { Heart } from 'lucide-react';
+import { useLanguage } from '@/context/LanguageContext';
+import { t } from '@/lib/i18n';
 
 interface UpvoteButtonProps {
   quoteId: string;
@@ -11,6 +13,7 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
   const [count, setCount] = useState(initialCount);
   const [voted, setVoted] = useState(false);
   const [loading, setLoading] = useState(false);
+  const { lang } = useLanguage();
 
   async function handleVote() {
     if (voted || loading) return;
@@ -37,7 +40,7 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
     <button
       onClick={handleVote}
       disabled={voted || loading}
-      aria-label={voted ? 'Đã thích' : 'Thích trích dẫn này'}
+      aria-label={voted ? t('aria_upvoted', lang) : t('aria_upvote', lang)}
       className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 min-h-[44px] ${
         loading ? 'opacity-60 cursor-wait' : ''
       } ${
@@ -47,7 +50,7 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
       }`}
     >
       <Heart size={16} className={voted ? 'fill-gold text-gold' : ''} />
-      {count} {voted ? 'Đã thích' : 'Thích'}
+      {count} {voted ? t('btn_upvoted', lang) : t('btn_upvote', lang)}
     </button>
   );
 }
