@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Heart } from 'lucide-react';
 
 interface UpvoteButtonProps {
   quoteId: string;
@@ -26,7 +27,7 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
         setVoted(true);
       }
     } catch {
-      // Network error — silently fail, don't change state
+      // Network error — silently fail
     } finally {
       setLoading(false);
     }
@@ -36,16 +37,17 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
     <button
       onClick={handleVote}
       disabled={voted || loading}
-      aria-label={voted ? 'Đã thích trích dẫn này' : 'Thích trích dẫn này'}
-      className={`flex items-center gap-2 px-4 py-2 rounded-lg border font-medium transition-colors ${
+      aria-label={voted ? 'Đã thích' : 'Thích trích dẫn này'}
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 min-h-[44px] ${
         loading ? 'opacity-60 cursor-wait' : ''
       } ${
         voted
-          ? 'bg-amber-50 border-amber-300 text-amber-700 cursor-default'
-          : 'bg-white border-gray-300 text-gray-700 hover:border-amber-400 hover:text-amber-600'
+          ? 'bg-sienna-light text-gold border border-gold cursor-default'
+          : 'bg-sienna text-cream hover:bg-gold'
       }`}
     >
-      ▲ {count} {voted ? 'Đã thích' : loading ? '...' : 'Thích'}
+      <Heart size={16} className={voted ? 'fill-gold text-gold' : ''} />
+      {count} {voted ? 'Đã thích' : 'Thích'}
     </button>
   );
 }

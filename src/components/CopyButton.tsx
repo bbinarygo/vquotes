@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import { Link2, Check } from 'lucide-react';
 
 export default function CopyButton({ url }: { url: string }) {
   const [copied, setCopied] = useState(false);
@@ -10,7 +11,7 @@ export default function CopyButton({ url }: { url: string }) {
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      // Clipboard not available — silently fail
+      // Clipboard not available
     }
   }
 
@@ -18,9 +19,10 @@ export default function CopyButton({ url }: { url: string }) {
     <button
       onClick={handleCopy}
       aria-label="Sao chép liên kết"
-      className="px-4 py-2 border rounded-lg text-sm text-gray-600 hover:border-gray-400 transition-colors"
+      className="flex items-center gap-2 px-4 py-2.5 rounded-full border border-rule text-sm text-ink-muted hover:border-sienna hover:text-sienna transition-colors min-h-[44px]"
     >
-      {copied ? '✓ Đã sao chép' : 'Sao chép liên kết / Copy link'}
+      {copied ? <Check size={15} className="text-sienna" /> : <Link2 size={15} />}
+      {copied ? 'Đã sao chép' : 'Sao chép'}
     </button>
   );
 }
