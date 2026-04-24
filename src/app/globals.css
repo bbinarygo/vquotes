@@ -1,3 +1,40 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  /* Colors */
+  --color-cream: #FAF7F2;
+  --color-parchment: #F0EAE0;
+  --color-ink: #1C1917;
+  --color-ink-muted: #57534E;
+  --color-ink-faint: #A8A29E;
+  --color-sienna: #C2410C;
+  --color-sienna-light: #FED7AA;
+  --color-gold: #92400E;
+  --color-rule: #D6CFC7;
+
+  /* Fonts — filled in Task 2 after next/font generates variable names */
+  --font-playfair: var(--font-playfair-display);
+  --font-sans: var(--font-dm-sans);
+
+  /* Shadows */
+  --shadow-card: 0 2px 12px rgba(28, 25, 23, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(28, 25, 23, 0.14);
+}
+
+/* Base styles */
+body {
+  background-color: var(--color-cream);
+  color: var(--color-ink);
+  overflow-x: hidden;
+}
+
+/* Hide scrollbar utility for horizontal scroll on mobile */
+@layer utilities {
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}

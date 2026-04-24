@@ -1,47 +1,10 @@
+import { GitPullRequest, MessageSquarePlus, Copy } from 'lucide-react';
+
 const GITHUB_REPO = 'https://github.com/bbinarygo/vquotes';
 const GITHUB_NEW_ISSUE = `${GITHUB_REPO}/issues/new?template=new-quote.yml`;
 
-export default function ContributePage() {
-  return (
-    <div className="max-w-2xl mx-auto space-y-8">
-      <h1 className="text-3xl font-bold text-gray-800">Đóng góp trích dẫn / Contribute</h1>
-
-      <div className="bg-amber-50 border border-amber-200 rounded-lg p-4 text-sm text-amber-800">
-        Mọi đóng góp đều được xét duyệt trước khi đăng. Chúng tôi chỉ chấp nhận trích dẫn có nguồn xác minh công khai. Đây là dự án bảo tồn văn hóa, không phải nền tảng chính trị.
-        <br /><br />
-        All contributions are reviewed before going live. We only accept quotes with verifiable public sources. This is a cultural preservation project, not a political platform.
-      </div>
-
-      <section className="space-y-3">
-        <h2 className="text-xl font-semibold text-gray-700">Cách 1: Qua GitHub Issues (khuyến nghị)</h2>
-        <p className="text-gray-600 text-sm">Điền form — chúng tôi sẽ xét duyệt và thêm trích dẫn cho bạn.</p>
-        <a
-          href={GITHUB_NEW_ISSUE}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-6 py-3 bg-amber-500 text-white rounded-lg hover:bg-amber-600 transition-colors font-medium"
-        >
-          Gửi trích dẫn mới / Submit new quote →
-        </a>
-      </section>
-
-      <section className="space-y-3">
-        <h2 className="text-xl font-semibold text-gray-700">Cách 2: Pull Request trực tiếp</h2>
-        <p className="text-gray-600 text-sm">Dành cho người dùng kỹ thuật — fork repo, tạo file JSON trong thư mục <code className="bg-gray-100 px-1 rounded">/quotes/</code>, mở PR.</p>
-        <a
-          href={GITHUB_REPO}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-block px-6 py-3 border border-gray-300 text-gray-700 rounded-lg hover:border-amber-400 hover:text-amber-600 transition-colors"
-        >
-          Xem repo GitHub →
-        </a>
-      </section>
-
-      <section className="space-y-2 text-sm text-gray-500 border-t pt-6">
-        <p className="font-medium text-gray-600">Định dạng JSON:</p>
-        <pre className="bg-gray-50 border rounded-lg p-4 text-xs overflow-x-auto">{`{
-  "id": "film-ten-dao-dien-ten-phim-001",
+const JSON_EXAMPLE = `{
+  "id": "film-ten-dao-dien-001",
   "quote_vi": "Nguyên văn tiếng Việt",
   "quote_en": "English translation",
   "author": "Tên tác giả",
@@ -50,9 +13,84 @@ export default function ContributePage() {
   "tags": ["tag1", "tag2"],
   "year": 2023,
   "verified": true,
-  "contributor_github": "your-github-username"
-}`}</pre>
-      </section>
+  "contributor_github": "username"
+}`;
+
+export default function ContributePage() {
+  return (
+    <div className="max-w-2xl mx-auto space-y-10">
+      {/* Header */}
+      <div>
+        <h1 className="font-playfair text-4xl font-bold text-ink mb-4">
+          Đóng góp trích dẫn
+        </h1>
+        <div className="h-px bg-rule" />
+      </div>
+
+      {/* Legal disclaimer */}
+      <div className="border-l-4 border-sienna bg-parchment rounded-r-lg p-5">
+        <p className="text-sm text-ink-muted leading-relaxed mb-2">
+          Mọi đóng góp đều được xét duyệt trước khi đăng. Chúng tôi chỉ chấp nhận trích dẫn có nguồn xác minh công khai. Đây là dự án bảo tồn văn hóa, không phải nền tảng chính trị.
+        </p>
+        <p className="text-sm text-ink-faint leading-relaxed italic">
+          All contributions are reviewed before going live. We only accept quotes with verifiable public sources. This is a cultural preservation project, not a political platform.
+        </p>
+      </div>
+
+      {/* Two contribution path cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {/* Card 1: GitHub Issues */}
+        <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
+          <MessageSquarePlus size={28} className="text-sienna" />
+          <div>
+            <h2 className="font-playfair text-xl font-bold text-ink mb-2">Qua GitHub Issues</h2>
+            <p className="text-sm text-ink-muted leading-relaxed">
+              Điền form — chúng tôi sẽ xét duyệt và thêm trích dẫn cho bạn. Khuyến nghị cho người dùng không quen GitHub.
+            </p>
+          </div>
+          <a
+            href={GITHUB_NEW_ISSUE}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 bg-sienna text-cream rounded-lg hover:bg-gold transition-colors text-sm font-medium min-h-[44px]"
+          >
+            Gửi trích dẫn mới →
+          </a>
+        </div>
+
+        {/* Card 2: Direct PR */}
+        <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
+          <GitPullRequest size={28} className="text-sienna" />
+          <div>
+            <h2 className="font-playfair text-xl font-bold text-ink mb-2">Pull Request trực tiếp</h2>
+            <p className="text-sm text-ink-muted leading-relaxed">
+              Fork repo, tạo file JSON trong <code className="bg-parchment px-1 rounded text-xs">/quotes/</code>, mở PR. Dành cho người quen với GitHub.
+            </p>
+          </div>
+          <a
+            href={GITHUB_REPO}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 border border-sienna text-sienna rounded-lg hover:bg-sienna hover:text-cream transition-colors text-sm font-medium min-h-[44px]"
+          >
+            Xem repo GitHub →
+          </a>
+        </div>
+      </div>
+
+      {/* JSON schema — dark code block */}
+      <div>
+        <p className="text-sm font-semibold text-ink-muted mb-3">Định dạng JSON:</p>
+        <div className="relative bg-ink rounded-xl overflow-hidden">
+          <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
+            <span className="text-xs text-white/40 font-mono">quotes/example-001.json</span>
+            <Copy size={14} className="text-white/30" />
+          </div>
+          <pre className="px-5 py-4 text-xs font-mono text-cream/80 overflow-x-auto leading-relaxed">
+            {JSON_EXAMPLE}
+          </pre>
+        </div>
+      </div>
     </div>
   );
 }
