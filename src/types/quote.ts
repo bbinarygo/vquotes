@@ -21,6 +21,7 @@ export interface Quote {
   quote_en: string;
   author: string;
   source: string;
+  source_url?: string;
   category: QuoteCategory[];
   tags: string[];
   year: number | null;
