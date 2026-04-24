@@ -46,3 +46,6 @@ docs/superpowers/
 
 # Environment
 .env.local
+
+# Git worktrees
+.worktrees/
