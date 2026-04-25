@@ -1,5 +1,5 @@
 'use client';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import type { Lang } from '@/lib/i18n';
 
 interface LanguageContextValue {
@@ -12,13 +12,14 @@ const LanguageContext = createContext<LanguageContextValue>({
   toggleLang: () => {},
 });
 
-export function LanguageProvider({ children }: { children: React.ReactNode }) {
-  const [lang, setLang] = useState<Lang>('vi');
+function getInitialLang(): Lang {
+  if (typeof window === 'undefined') return 'vi';
+  const stored = localStorage.getItem('vquotes-lang');
+  return stored === 'vi' || stored === 'en' ? stored : 'vi';
+}
 
-  useEffect(() => {
-    const stored = localStorage.getItem('vquotes-lang');
-    if (stored === 'vi' || stored === 'en') setLang(stored);
-  }, []);
+export function LanguageProvider({ children }: { children: React.ReactNode }) {
+  const [lang, setLang] = useState<Lang>(getInitialLang);
 
   function toggleLang() {
     const next: Lang = lang === 'vi' ? 'en' : 'vi';
