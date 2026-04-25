@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { LanguageProvider } from '@/context/LanguageContext';
 import MobileNav from '@/components/MobileNav';
 import LangToggle from '@/components/LangToggle';
+import { getLang } from '@/lib/lang';
+import { t } from '@/lib/i18n';
 import './globals.css';
 
 const playfair = Playfair_Display({
@@ -23,9 +25,11 @@ export const metadata: Metadata = {
   description: 'Cơ sở dữ liệu mở trích dẫn Việt Nam song ngữ. Open database of Vietnamese quotes in Vietnamese and English.',
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const lang = await getLang();
+
   return (
-    <html lang="vi" className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang={lang} className={`${playfair.variable} ${dmSans.variable}`}>
       <body className="font-sans bg-cream text-ink min-h-screen">
         <LanguageProvider>
           {/* Header */}
@@ -37,11 +41,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               {/* Desktop nav */}
               <nav className="hidden md:flex items-center gap-1 text-sm text-ink-muted">
                 <Link href="/browse" className="px-3 py-2 hover:text-sienna transition-colors rounded">
-                  Khám phá / Browse
+                  {t('nav_browse', lang)}
                 </Link>
                 <span className="text-rule mx-1">|</span>
                 <Link href="/contribute" className="px-3 py-2 hover:text-sienna transition-colors rounded">
-                  Đóng góp / Contribute
+                  {t('nav_contribute', lang)}
                 </Link>
                 <span className="text-rule mx-1">|</span>
                 <LangToggle />
@@ -62,17 +66,19 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               <div>
                 <p className="font-playfair text-xl font-bold text-sienna mb-2">VQuotes</p>
                 <p className="text-sm text-ink-muted leading-relaxed">
-                  Kho trích dẫn Việt Nam song ngữ — mở và miễn phí cho cộng đồng.
+                  {t('footer_tagline', lang)}
                 </p>
                 <span className="inline-block mt-3 text-xs border border-rule rounded px-2 py-0.5 text-ink-faint">
                   CC0 — Public Domain
                 </span>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">Liên kết</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">
+                  {t('footer_links', lang)}
+                </p>
                 <ul className="space-y-2 text-sm text-ink-muted">
-                  <li><Link href="/browse" className="hover:text-sienna transition-colors">Khám phá trích dẫn</Link></li>
-                  <li><Link href="/contribute" className="hover:text-sienna transition-colors">Đóng góp</Link></li>
+                  <li><Link href="/browse" className="hover:text-sienna transition-colors">{t('footer_browse', lang)}</Link></li>
+                  <li><Link href="/contribute" className="hover:text-sienna transition-colors">{t('footer_contribute', lang)}</Link></li>
                   <li><Link href="/schema" className="hover:text-sienna transition-colors">Schema</Link></li>
                   <li>
                     <a href="https://github.com/bbinarygo/vquotes" target="_blank" rel="noopener noreferrer" className="hover:text-sienna transition-colors">
@@ -82,9 +88,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
                 </ul>
               </div>
               <div>
-                <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">Về dự án</p>
+                <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">
+                  {t('footer_about', lang)}
+                </p>
                 <p className="text-xs text-ink-faint leading-relaxed">
-                  Mọi trích dẫn được xác minh từ nguồn công khai. Dự án bảo tồn văn hóa, không phải nền tảng chính trị. Tuân thủ pháp luật Việt Nam.
+                  {t('footer_about_text', lang)}
                 </p>
               </div>
             </div>
