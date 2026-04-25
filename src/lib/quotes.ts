@@ -1,17 +1,63 @@
-import fs from 'fs';
-import path from 'path';
+import { supabase } from '@/lib/supabase';
 import { Quote } from '@/types/quote';
 
-const QUOTES_DIR = path.join(process.cwd(), 'quotes');
-
-export function getAllQuotes(): Quote[] {
-  const files = fs.readdirSync(QUOTES_DIR).filter(f => f.endsWith('.json'));
-  return files.map(file => {
-    const content = fs.readFileSync(path.join(QUOTES_DIR, file), 'utf-8');
-    return JSON.parse(content) as Quote;
-  });
+export interface QuoteQueryOptions {
+  category?: string;
+  q?: string;
+  sort?: 'newest' | 'oldest' | 'most-voted';
+  page?: number;
+  pageSize?: number;
 }
 
-export function getQuoteById(id: string): Quote | undefined {
-  return getAllQuotes().find(q => q.id === id);
+export async function getAllQuotes(
+  opts: QuoteQueryOptions = {}
+): Promise<{ quotes: Quote[]; total: number }> {
+  const { category, q, sort = 'newest', page = 1, pageSize = 20 } = opts;
+  const offset = (page - 1) * pageSize;
+
+  let query = supabase
+    .from('quotes')
+    .select('*', { count: 'exact' });
+
+  if (category) {
+    query = query.contains('category', [category]);
+  }
+
+  if (q) {
+    const term = q.replace(/'/g, "''");
+    query = query.or(
+      `quote_vi.ilike.%${term}%,quote_en.ilike.%${term}%,author.ilike.%${term}%`
+    );
+  }
+
+  if (sort === 'newest') {
+    query = query.order('year', { ascending: false, nullsFirst: false });
+  } else if (sort === 'oldest') {
+    query = query.order('year', { ascending: true, nullsFirst: false });
+  }
+  // 'most-voted' sort is handled in the browse page after fetching vote counts
+
+  if (sort !== 'most-voted') {
+    query = query.range(offset, offset + pageSize - 1);
+  }
+
+  const { data, count, error } = await query;
+
+  if (error) throw new Error(`getAllQuotes: ${error.message}`);
+
+  return {
+    quotes: (data ?? []) as Quote[],
+    total: count ?? 0,
+  };
+}
+
+export async function getQuoteById(id: string): Promise<Quote | undefined> {
+  const { data, error } = await supabase
+    .from('quotes')
+    .select('*')
+    .eq('id', id)
+    .single();
+
+  if (error) return undefined;
+  return data as Quote;
 }

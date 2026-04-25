@@ -14,8 +14,8 @@ function SectionHeading({ vi, en }: { vi: string; en: string }) {
   );
 }
 
-export default function HomePage() {
-  const allQuotes = getAllQuotes();
+export default async function HomePage() {
+  const { quotes: allQuotes } = await getAllQuotes({ pageSize: 6 });
   const heroQuote = allQuotes[0];
   const featured = allQuotes.slice(0, 6);
 

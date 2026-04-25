@@ -4,7 +4,6 @@ import { getAllQuotes } from '@/lib/quotes';
 import { getVoteCounts } from '@/lib/vote';
 import QuoteCard from '@/components/QuoteCard';
 import FilterBar from '@/components/FilterBar';
-import { QuoteCategory } from '@/types/quote';
 import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PAGE_SIZE = 20;
@@ -18,33 +17,34 @@ async function BrowseContent({ searchParams }: BrowseProps) {
   const { category, q, sort = 'newest', page = '1' } = params;
   const currentPage = Math.max(1, parseInt(page));
 
-  let quotes = getAllQuotes();
+  const validSort = (sort === 'newest' || sort === 'oldest' || sort === 'most-voted')
+    ? sort
+    : 'newest';
 
-  if (category) {
-    quotes = quotes.filter(quote => quote.category.includes(category as QuoteCategory));
-  }
-  if (q) {
-    const lower = q.toLowerCase();
-    quotes = quotes.filter(quote =>
-      quote.quote_vi.toLowerCase().includes(lower) ||
-      quote.quote_en.toLowerCase().includes(lower) ||
-      quote.author.toLowerCase().includes(lower)
-    );
-  }
+  const { quotes: allQuotes, total } = await getAllQuotes({
+    category,
+    q,
+    sort: validSort,
+    page: validSort === 'most-voted' ? 1 : currentPage,
+    pageSize: validSort === 'most-voted' ? 10000 : PAGE_SIZE,
+  });
 
+  let paginated = allQuotes;
   let allVoteCounts: Record<string, number> = {};
-  if (sort === 'most-voted') {
-    allVoteCounts = await getVoteCounts(quotes.map(qt => qt.id));
-    quotes = quotes.sort((a, b) => (allVoteCounts[b.id] ?? 0) - (allVoteCounts[a.id] ?? 0));
-  } else {
-    quotes = quotes.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
+  let displayTotal = total;
+
+  if (validSort === 'most-voted') {
+    allVoteCounts = await getVoteCounts(allQuotes.map(qt => qt.id));
+    const sorted = [...allQuotes].sort(
+      (a, b) => (allVoteCounts[b.id] ?? 0) - (allVoteCounts[a.id] ?? 0)
+    );
+    displayTotal = sorted.length;
+    paginated = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   }
 
-  const total = quotes.length;
-  const totalPages = Math.ceil(total / PAGE_SIZE);
-  const paginated = quotes.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  const totalPages = Math.ceil(displayTotal / PAGE_SIZE);
 
-  const voteCounts = sort === 'most-voted'
+  const voteCounts = validSort === 'most-voted'
     ? Object.fromEntries(paginated.map(qt => [qt.id, allVoteCounts[qt.id] ?? 0]))
     : await getVoteCounts(paginated.map(qt => qt.id));
 
@@ -62,7 +62,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
     <div className="space-y-6">
       <div className="flex items-baseline justify-between">
         <h1 className="font-playfair text-3xl font-bold text-ink">Khám phá / Browse</h1>
-        <p className="text-sm text-ink-faint">{total} trích dẫn / quotes</p>
+        <p className="text-sm text-ink-faint">{displayTotal} trích dẫn / quotes</p>
       </div>
 
       <div className="sticky top-16 z-10 -mx-4 px-4 py-3 bg-cream/95 backdrop-blur-sm border-b border-rule">

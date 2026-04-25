@@ -8,7 +8,8 @@ import MobileActionBar from '@/components/MobileActionBar';
 import QuoteDetailBadges from '@/components/QuoteDetailBadges';
 
 export async function generateStaticParams() {
-  return getAllQuotes().map(q => ({ id: q.id }));
+  const { quotes } = await getAllQuotes({ pageSize: 10000 });
+  return quotes.map(q => ({ id: q.id }));
 }
 
 interface QuotePageProps {
@@ -20,7 +21,7 @@ const REPORT_FORM_URL = 'https://forms.gle/um8zQvheDqpPVRCBA';
 
 export default async function QuotePage({ params }: QuotePageProps) {
   const { id } = await params;
-  const quote = getQuoteById(id);
+  const quote = await getQuoteById(id);
   if (!quote) notFound();
 
   const voteCounts = await getVoteCounts([quote.id]);
