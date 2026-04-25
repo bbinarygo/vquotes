@@ -2,6 +2,8 @@ import { notFound } from 'next/navigation';
 import { Flag, ShieldCheck, ExternalLink } from 'lucide-react';
 import { getAllQuotes, getQuoteById } from '@/lib/quotes';
 import { getVoteCounts } from '@/lib/vote';
+import { getLang } from '@/lib/lang';
+import { t } from '@/lib/i18n';
 import UpvoteButton from '@/components/UpvoteButton';
 import CopyButton from '@/components/CopyButton';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -20,6 +22,7 @@ const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://vquotes.vercel.app
 const REPORT_FORM_URL = 'https://forms.gle/um8zQvheDqpPVRCBA';
 
 export default async function QuotePage({ params }: QuotePageProps) {
+  const lang = await getLang();
   const { id } = await params;
   const quote = await getQuoteById(id);
   if (!quote) notFound();
@@ -50,7 +53,9 @@ export default async function QuotePage({ params }: QuotePageProps) {
           </p>
           <div className="relative flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-rule" />
-            <span className="text-xs font-medium text-ink-faint tracking-widest">VI · EN</span>
+            <span className="text-xs font-medium text-ink-faint tracking-widest">
+              {t('detail_vi_en_divider', lang)}
+            </span>
             <div className="flex-1 h-px bg-rule" />
           </div>
           {/* English */}
@@ -61,14 +66,13 @@ export default async function QuotePage({ params }: QuotePageProps) {
           <p className="text-sm font-semibold uppercase tracking-wider text-sienna mb-1">
             —— {quote.author}
           </p>
-          {/* Badges — client component for lang-aware labels */}
           <QuoteDetailBadges categories={quote.category} tags={quote.tags} />
         </div>
 
         {/* Source card */}
         <div className="bg-parchment border border-rule rounded-lg p-5">
           <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">
-            NGUỒN · SOURCE
+            {t('detail_source_label', lang)}
           </p>
           <p className="text-sm text-ink-muted">
             {quote.source}{quote.year ? ` · ${quote.year}` : ''}
@@ -81,7 +85,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
               className="inline-flex items-center gap-1 mt-2 text-sm text-sienna hover:underline"
             >
               <ExternalLink size={13} />
-              → Xem nguồn / View source
+              {t('detail_view_source', lang)}
             </a>
           )}
         </div>
@@ -96,14 +100,14 @@ export default async function QuotePage({ params }: QuotePageProps) {
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 border border-rule rounded-full text-sm text-ink-muted hover:border-red-300 hover:text-red-500 transition-colors min-h-[44px]"
           >
-            <Flag size={15} /> Báo lỗi / Report
+            <Flag size={15} /> {t('btn_report', lang)}
           </a>
           <a
             href={facebookUrl}
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-blue-600 hover:bg-blue-50 transition-colors"
-            aria-label="Chia sẻ Facebook"
+            aria-label={t('aria_facebook', lang)}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
           </a>
@@ -112,7 +116,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             target="_blank"
             rel="noopener noreferrer"
             className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-ink hover:bg-parchment transition-colors"
-            aria-label="Chia sẻ X"
+            aria-label={t('aria_x', lang)}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
           </a>
@@ -121,7 +125,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
         {/* Verification note */}
         <div className="flex items-center gap-2 text-xs text-ink-faint">
           <ShieldCheck size={14} />
-          <span>Trích dẫn đã được xác minh từ nguồn công khai. Nếu có sai sót, vui lòng báo lỗi.</span>
+          <span>{t('detail_verified', lang)}</span>
         </div>
       </div>
 
