@@ -19,7 +19,8 @@ if (!supabaseUrl || !serviceRoleKey) {
 const supabase = createClient(supabaseUrl, serviceRoleKey);
 
 const files = readdirSync(QUOTES_DIR)
-  .filter(f => f.endsWith('.json') && !EXCLUDE.includes(f));
+  .filter(f => f.endsWith('.json') && !EXCLUDE.includes(f))
+  .sort();
 
 const quotes = [];
 let parseErrors = 0;
@@ -27,7 +28,9 @@ let parseErrors = 0;
 for (const file of files) {
   try {
     const raw = readFileSync(join(QUOTES_DIR, file), 'utf-8');
-    quotes.push(JSON.parse(raw));
+    const obj = JSON.parse(raw);
+    if (!obj.id) throw new Error('missing required field: id');
+    quotes.push(obj);
   } catch (err) {
     console.error(`[SKIP] ${file}: ${err.message}`);
     parseErrors++;
