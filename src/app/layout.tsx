@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const lang = await getLang();
 
   return (
-    <html lang={lang} className={`${playfair.variable} ${dmSans.variable}`}>
+    <html lang={lang} className={`${playfair.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-cream text-ink min-h-screen">
         <LanguageProvider>
           {/* Header */}
