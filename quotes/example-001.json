@@ -1,0 +1,13 @@
+{
+  "id": "category-author-slug-001",
+  "quote_vi": "Câu trích dẫn bằng tiếng Việt.",
+  "quote_en": "The quote in English translation.",
+  "author": "Tên Tác Giả",
+  "source": "Tên tác phẩm hoặc nguồn gốc (năm)",
+  "source_url": "https://example.com/source",
+  "category": ["film"],
+  "tags": ["tag-one", "tag-two"],
+  "year": 2000,
+  "verified": false,
+  "contributor_github": null
+}
