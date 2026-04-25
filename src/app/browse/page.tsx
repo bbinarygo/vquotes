@@ -29,7 +29,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
     pageSize: validSort === 'most-voted' ? 10000 : PAGE_SIZE,
   });
 
-  let paginated = allQuotes;
+  let quotes = allQuotes;
   let allVoteCounts: Record<string, number> = {};
   let displayTotal = total;
 
@@ -39,14 +39,14 @@ async function BrowseContent({ searchParams }: BrowseProps) {
       (a, b) => (allVoteCounts[b.id] ?? 0) - (allVoteCounts[a.id] ?? 0)
     );
     displayTotal = sorted.length;
-    paginated = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+    quotes = sorted.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
   }
 
   const totalPages = Math.ceil(displayTotal / PAGE_SIZE);
 
   const voteCounts = validSort === 'most-voted'
-    ? Object.fromEntries(paginated.map(qt => [qt.id, allVoteCounts[qt.id] ?? 0]))
-    : await getVoteCounts(paginated.map(qt => qt.id));
+    ? Object.fromEntries(quotes.map(qt => [qt.id, allVoteCounts[qt.id] ?? 0]))
+    : await getVoteCounts(quotes.map(qt => qt.id));
 
   const buildUrl = (p: number) => {
     const next = new URLSearchParams({
@@ -71,7 +71,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
         </Suspense>
       </div>
 
-      {paginated.length === 0 && (
+      {quotes.length === 0 && (
         <div className="flex flex-col items-center gap-4 py-24 text-center">
           <BookOpen size={48} className="text-ink-faint opacity-40" />
           <p className="font-playfair text-xl text-ink-muted">Không tìm thấy trích dẫn nào. / No quotes found.</p>
@@ -84,9 +84,9 @@ async function BrowseContent({ searchParams }: BrowseProps) {
         </div>
       )}
 
-      {paginated.length > 0 && (
+      {quotes.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
-          {paginated.map(quote => (
+          {quotes.map(quote => (
             <QuoteCard key={quote.id} quote={quote} voteCount={voteCounts[quote.id] ?? 0} />
           ))}
         </div>
