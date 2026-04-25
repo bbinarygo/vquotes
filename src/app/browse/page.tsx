@@ -2,6 +2,8 @@ import { Suspense } from 'react';
 import Link from 'next/link';
 import { getAllQuotes } from '@/lib/quotes';
 import { getVoteCounts } from '@/lib/vote';
+import { getLang } from '@/lib/lang';
+import { t } from '@/lib/i18n';
 import QuoteCard from '@/components/QuoteCard';
 import FilterBar from '@/components/FilterBar';
 import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
@@ -13,6 +15,7 @@ interface BrowseProps {
 }
 
 async function BrowseContent({ searchParams }: BrowseProps) {
+  const lang = await getLang();
   const params = await searchParams;
   const { category, q, sort = 'newest', page = '1' } = params;
   const currentPage = Math.max(1, parseInt(page, 10) || 1);
@@ -61,8 +64,8 @@ async function BrowseContent({ searchParams }: BrowseProps) {
   return (
     <div className="space-y-6">
       <div className="flex items-baseline justify-between">
-        <h1 className="font-playfair text-3xl font-bold text-ink">Khám phá / Browse</h1>
-        <p className="text-sm text-ink-faint">{displayTotal} trích dẫn / quotes</p>
+        <h1 className="font-playfair text-3xl font-bold text-ink">{t('browse_title', lang)}</h1>
+        <p className="text-sm text-ink-faint">{displayTotal} {t('browse_count', lang)}</p>
       </div>
 
       <div className="sticky top-16 z-10 -mx-4 px-4 py-3 bg-cream/95 backdrop-blur-sm border-b border-rule">
@@ -74,12 +77,13 @@ async function BrowseContent({ searchParams }: BrowseProps) {
       {quotes.length === 0 && (
         <div className="flex flex-col items-center gap-4 py-24 text-center">
           <BookOpen size={48} className="text-ink-faint opacity-40" />
-          <p className="font-playfair text-xl text-ink-muted">Không tìm thấy trích dẫn nào. / No quotes found.</p>
+          <p className="font-playfair text-xl text-ink-muted">{t('no_quotes_found', lang)}</p>
+          <p className="text-sm text-ink-faint">{t('no_quotes_sub', lang)}</p>
           <Link
             href="/browse"
             className="mt-2 px-4 py-2 border border-sienna text-sienna rounded-lg text-sm hover:bg-sienna hover:text-cream transition-colors"
           >
-            Xoá bộ lọc / Clear filters
+            {t('clear_filters', lang)}
           </Link>
         </div>
       )}
@@ -99,11 +103,11 @@ async function BrowseContent({ searchParams }: BrowseProps) {
               href={buildUrl(currentPage - 1)}
               className="flex items-center gap-1 px-4 py-2 border border-rule rounded-lg text-sm text-ink-muted hover:border-sienna hover:text-sienna transition-colors min-h-[44px]"
             >
-              <ChevronLeft size={16} /> Trang trước
+              <ChevronLeft size={16} /> {t('page_prev', lang)}
             </Link>
           ) : (
             <span className="flex items-center gap-1 px-4 py-2 border border-rule rounded-lg text-sm text-ink-faint opacity-40 min-h-[44px] cursor-not-allowed">
-              <ChevronLeft size={16} /> Trang trước
+              <ChevronLeft size={16} /> {t('page_prev', lang)}
             </span>
           )}
           <span className="text-sm text-ink-muted font-medium">{currentPage} / {totalPages}</span>
@@ -112,11 +116,11 @@ async function BrowseContent({ searchParams }: BrowseProps) {
               href={buildUrl(currentPage + 1)}
               className="flex items-center gap-1 px-4 py-2 border border-rule rounded-lg text-sm text-ink-muted hover:border-sienna hover:text-sienna transition-colors min-h-[44px]"
             >
-              Trang sau <ChevronRight size={16} />
+              {t('page_next', lang)} <ChevronRight size={16} />
             </Link>
           ) : (
             <span className="flex items-center gap-1 px-4 py-2 border border-rule rounded-lg text-sm text-ink-faint opacity-40 min-h-[44px] cursor-not-allowed">
-              Trang sau <ChevronRight size={16} />
+              {t('page_next', lang)} <ChevronRight size={16} />
             </span>
           )}
         </div>
@@ -127,7 +131,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
 export default function BrowsePage(props: BrowseProps) {
   return (
-    <Suspense fallback={<div className="text-ink-faint py-12 text-center">Đang tải... / Loading...</div>}>
+    <Suspense fallback={<div className="text-ink-faint py-12 text-center">{/* Loading handled by Suspense */}</div>}>
       <BrowseContent {...props} />
     </Suspense>
   );
