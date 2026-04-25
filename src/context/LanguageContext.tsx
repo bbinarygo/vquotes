@@ -25,6 +25,7 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     const next: Lang = lang === 'vi' ? 'en' : 'vi';
     setLang(next);
     localStorage.setItem('vquotes-lang', next);
+    document.cookie = `vquotes-lang=${next}; path=/; SameSite=Lax; max-age=31536000`;
   }
 
   return (
