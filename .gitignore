@@ -42,10 +42,14 @@ next-env.d.ts
 
 # Local-only founder and planning docs
 founder-docs/
+founder_doc/
 docs/superpowers/
 
 # Environment
 .env.local
+
+# Claude local config
+.claude/
 
 # Git worktrees
 .worktrees/
