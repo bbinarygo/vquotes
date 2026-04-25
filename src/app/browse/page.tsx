@@ -34,7 +34,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
   let allVoteCounts: Record<string, number> = {};
   if (sort === 'most-voted') {
-    allVoteCounts = await getVoteCounts(quotes.map(quote => quote.id));
+    allVoteCounts = await getVoteCounts(quotes.map(qt => qt.id));
     quotes = quotes.sort((a, b) => (allVoteCounts[b.id] ?? 0) - (allVoteCounts[a.id] ?? 0));
   } else {
     quotes = quotes.sort((a, b) => (b.year ?? 0) - (a.year ?? 0));
@@ -46,7 +46,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
   const voteCounts = sort === 'most-voted'
     ? Object.fromEntries(paginated.map(qt => [qt.id, allVoteCounts[qt.id] ?? 0]))
-    : await getVoteCounts(paginated.map(quote => quote.id));
+    : await getVoteCounts(paginated.map(qt => qt.id));
 
   const buildUrl = (p: number) => {
     const next = new URLSearchParams({
@@ -60,25 +60,21 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
   return (
     <div className="space-y-6">
-      {/* Header row */}
       <div className="flex items-baseline justify-between">
-        <h1 className="font-playfair text-3xl font-bold text-ink">Khám phá</h1>
-        <p className="text-sm text-ink-faint">{total} trích dẫn</p>
+        <h1 className="font-playfair text-3xl font-bold text-ink">Khám phá / Browse</h1>
+        <p className="text-sm text-ink-faint">{total} trích dẫn / quotes</p>
       </div>
 
-      {/* Sticky filter bar */}
       <div className="sticky top-16 z-10 -mx-4 px-4 py-3 bg-cream/95 backdrop-blur-sm border-b border-rule">
         <Suspense>
           <FilterBar />
         </Suspense>
       </div>
 
-      {/* Empty state */}
       {paginated.length === 0 && (
         <div className="flex flex-col items-center gap-4 py-24 text-center">
           <BookOpen size={48} className="text-ink-faint opacity-40" />
-          <p className="font-playfair text-xl text-ink-muted">Không tìm thấy trích dẫn nào.</p>
-          <p className="text-sm text-ink-faint">No quotes found matching your filters.</p>
+          <p className="font-playfair text-xl text-ink-muted">Không tìm thấy trích dẫn nào. / No quotes found.</p>
           <Link
             href="/browse"
             className="mt-2 px-4 py-2 border border-sienna text-sienna rounded-lg text-sm hover:bg-sienna hover:text-cream transition-colors"
@@ -88,7 +84,6 @@ async function BrowseContent({ searchParams }: BrowseProps) {
         </div>
       )}
 
-      {/* Grid */}
       {paginated.length > 0 && (
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {paginated.map(quote => (
@@ -97,7 +92,6 @@ async function BrowseContent({ searchParams }: BrowseProps) {
         </div>
       )}
 
-      {/* Prev/next pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-center gap-4 pt-6">
           {currentPage > 1 ? (
@@ -112,11 +106,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
               <ChevronLeft size={16} /> Trang trước
             </span>
           )}
-
-          <span className="text-sm text-ink-muted font-medium">
-            {currentPage} / {totalPages}
-          </span>
-
+          <span className="text-sm text-ink-muted font-medium">{currentPage} / {totalPages}</span>
           {currentPage < totalPages ? (
             <Link
               href={buildUrl(currentPage + 1)}
@@ -137,7 +127,7 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
 export default function BrowsePage(props: BrowseProps) {
   return (
-    <Suspense fallback={<div className="text-ink-faint py-12 text-center">Đang tải...</div>}>
+    <Suspense fallback={<div className="text-ink-faint py-12 text-center">Đang tải... / Loading...</div>}>
       <BrowseContent {...props} />
     </Suspense>
   );

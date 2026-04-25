@@ -3,10 +3,12 @@ import QuoteCard from '@/components/QuoteCard';
 import SearchBar from '@/components/SearchBar';
 import CategoryGrid from '@/components/CategoryGrid';
 
-function SectionHeading({ children }: { children: React.ReactNode }) {
+function SectionHeading({ vi, en }: { vi: string; en: string }) {
   return (
     <div className="flex items-center gap-4 mb-8">
-      <h2 className="font-playfair text-2xl font-bold text-ink whitespace-nowrap">{children}</h2>
+      <h2 className="font-playfair text-2xl font-bold text-ink whitespace-nowrap">
+        {vi} <span className="text-ink-faint font-normal text-lg">/ {en}</span>
+      </h2>
       <div className="flex-1 h-px bg-rule" />
     </div>
   );
@@ -34,8 +36,6 @@ export default function HomePage() {
           Trích dẫn<br />
           <span className="text-sienna italic">Việt Nam</span>
         </h1>
-
-        {/* Hero quote */}
         {heroQuote && (
           <div className="relative max-w-2xl mx-auto mb-10 px-8">
             <span
@@ -51,7 +51,6 @@ export default function HomePage() {
             <p className="mt-3 text-sm text-ink-faint">— {heroQuote.author}</p>
           </div>
         )}
-
         <div className="flex justify-center px-4">
           <SearchBar />
         </div>
@@ -59,7 +58,7 @@ export default function HomePage() {
 
       {/* Featured quotes */}
       <section>
-        <SectionHeading>Trích dẫn nổi bật</SectionHeading>
+        <SectionHeading vi="Trích dẫn nổi bật" en="Featured Quotes" />
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map(q => (
             <QuoteCard key={q.id} quote={q} />
@@ -69,7 +68,7 @@ export default function HomePage() {
 
       {/* Categories */}
       <section>
-        <SectionHeading>Khám phá theo thể loại</SectionHeading>
+        <SectionHeading vi="Khám phá theo thể loại" en="Explore by Category" />
         <CategoryGrid />
       </section>
     </div>

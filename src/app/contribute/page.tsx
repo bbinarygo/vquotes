@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { GitPullRequest, MessageSquarePlus, Copy } from 'lucide-react';
 
 const GITHUB_REPO = 'https://github.com/bbinarygo/vquotes';
@@ -9,6 +10,7 @@ const JSON_EXAMPLE = `{
   "quote_en": "English translation",
   "author": "Tên tác giả",
   "source": "Tên tác phẩm (năm)",
+  "source_url": "https://example.com/source",
   "category": ["film"],
   "tags": ["tag1", "tag2"],
   "year": 2023,
@@ -19,15 +21,13 @@ const JSON_EXAMPLE = `{
 export default function ContributePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-10">
-      {/* Header */}
       <div>
         <h1 className="font-playfair text-4xl font-bold text-ink mb-4">
-          Đóng góp trích dẫn
+          Đóng góp trích dẫn / Contribute a Quote
         </h1>
         <div className="h-px bg-rule" />
       </div>
 
-      {/* Legal disclaimer */}
       <div className="border-l-4 border-sienna bg-parchment rounded-r-lg p-5">
         <p className="text-sm text-ink-muted leading-relaxed mb-2">
           Mọi đóng góp đều được xét duyệt trước khi đăng. Chúng tôi chỉ chấp nhận trích dẫn có nguồn xác minh công khai. Đây là dự án bảo tồn văn hóa, không phải nền tảng chính trị.
@@ -37,9 +37,7 @@ export default function ContributePage() {
         </p>
       </div>
 
-      {/* Two contribution path cards */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
-        {/* Card 1: GitHub Issues */}
         <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
           <MessageSquarePlus size={28} className="text-sienna" />
           <div>
@@ -58,7 +56,6 @@ export default function ContributePage() {
           </a>
         </div>
 
-        {/* Card 2: Direct PR */}
         <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
           <GitPullRequest size={28} className="text-sienna" />
           <div>
@@ -78,9 +75,8 @@ export default function ContributePage() {
         </div>
       </div>
 
-      {/* JSON schema — dark code block */}
       <div>
-        <p className="text-sm font-semibold text-ink-muted mb-3">Định dạng JSON:</p>
+        <p className="text-sm font-semibold text-ink-muted mb-3">Định dạng JSON / JSON format:</p>
         <div className="relative bg-ink rounded-xl overflow-hidden">
           <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
             <span className="text-xs text-white/40 font-mono">quotes/example-001.json</span>
@@ -90,6 +86,15 @@ export default function ContributePage() {
             {JSON_EXAMPLE}
           </pre>
         </div>
+        <p className="mt-3 text-xs text-ink-faint">
+          <code className="bg-parchment px-1 rounded">source_url</code> là tùy chọn — chỉ thêm nếu có liên kết trực tiếp đến nguồn. /{' '}
+          <code className="bg-parchment px-1 rounded">source_url</code> is optional — only add if a direct link to the source exists.
+        </p>
+        <p className="mt-4 text-sm text-ink-muted">
+          <Link href="/schema" className="text-sienna hover:underline">
+            Xem danh sách thể loại và tag → / View category and tag reference →
+          </Link>
+        </p>
       </div>
     </div>
   );

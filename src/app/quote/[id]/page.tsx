@@ -1,10 +1,11 @@
 import { notFound } from 'next/navigation';
-import { Flag, ShieldCheck } from 'lucide-react';
+import { Flag, ShieldCheck, ExternalLink } from 'lucide-react';
 import { getAllQuotes, getQuoteById } from '@/lib/quotes';
 import { getVoteCounts } from '@/lib/vote';
 import UpvoteButton from '@/components/UpvoteButton';
 import CopyButton from '@/components/CopyButton';
 import MobileActionBar from '@/components/MobileActionBar';
+import QuoteDetailBadges from '@/components/QuoteDetailBadges';
 
 export async function generateStaticParams() {
   return getAllQuotes().map(q => ({ id: q.id }));
@@ -32,12 +33,9 @@ export default async function QuotePage({ params }: QuotePageProps) {
 
   return (
     <>
-      {/* Extra bottom padding on mobile so content isn't hidden behind the action bar */}
       <div className="max-w-2xl mx-auto space-y-8 pb-24 md:pb-0">
-
         {/* Quote block */}
         <div className="relative bg-white border-l-4 border-sienna rounded-r-xl px-8 pt-10 pb-8 shadow-card">
-          {/* Decorative quotemark */}
           <span
             className="absolute top-4 left-6 font-playfair text-8xl text-sienna leading-none select-none pointer-events-none"
             style={{ opacity: 0.15 }}
@@ -45,47 +43,46 @@ export default async function QuotePage({ params }: QuotePageProps) {
           >
             &ldquo;
           </span>
-
-          {/* Vietnamese */}
+          {/* Vietnamese (always first) */}
           <p className="font-playfair italic text-2xl md:text-3xl text-ink leading-relaxed mb-6 relative z-10">
             {quote.quote_vi}
           </p>
-
-          {/* VI / EN divider */}
           <div className="relative flex items-center gap-3 mb-6">
             <div className="flex-1 h-px bg-rule" />
             <span className="text-xs font-medium text-ink-faint tracking-widest">VI · EN</span>
             <div className="flex-1 h-px bg-rule" />
           </div>
-
           {/* English */}
           <p className="font-sans italic text-base md:text-lg text-ink-muted leading-relaxed mb-6">
             {quote.quote_en}
           </p>
-
           <hr className="border-rule mb-4" />
-
-          {/* Author */}
           <p className="text-sm font-semibold uppercase tracking-wider text-sienna mb-1">
             —— {quote.author}
           </p>
-          <p className="text-sm text-ink-faint">
+          {/* Badges — client component for lang-aware labels */}
+          <QuoteDetailBadges categories={quote.category} tags={quote.tags} />
+        </div>
+
+        {/* Source card */}
+        <div className="bg-parchment border border-rule rounded-lg p-5">
+          <p className="text-xs font-semibold uppercase tracking-wider text-ink-faint mb-3">
+            NGUỒN · SOURCE
+          </p>
+          <p className="text-sm text-ink-muted">
             {quote.source}{quote.year ? ` · ${quote.year}` : ''}
           </p>
-
-          {/* Badges */}
-          <div className="flex flex-wrap gap-2 mt-4">
-            {quote.category.map(c => (
-              <span key={c} className="text-xs bg-sienna-light text-sienna rounded-full px-3 py-0.5">
-                {c}
-              </span>
-            ))}
-            {quote.tags.map(t => (
-              <span key={t} className="text-xs bg-parchment text-ink-muted rounded-full px-3 py-0.5">
-                #{t}
-              </span>
-            ))}
-          </div>
+          {quote.source_url && (
+            <a
+              href={quote.source_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 mt-2 text-sm text-sienna hover:underline"
+            >
+              <ExternalLink size={13} />
+              → Xem nguồn / View source
+            </a>
+          )}
         </div>
 
         {/* Desktop action bar */}
@@ -98,7 +95,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             rel="noopener noreferrer"
             className="flex items-center gap-2 px-4 py-2.5 border border-rule rounded-full text-sm text-ink-muted hover:border-red-300 hover:text-red-500 transition-colors min-h-[44px]"
           >
-            <Flag size={15} /> Báo lỗi
+            <Flag size={15} /> Báo lỗi / Report
           </a>
           <a
             href={facebookUrl}
@@ -127,7 +124,6 @@ export default async function QuotePage({ params }: QuotePageProps) {
         </div>
       </div>
 
-      {/* Mobile sticky action bar */}
       <MobileActionBar
         quoteId={quote.id}
         voteCount={voteCount}
