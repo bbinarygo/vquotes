@@ -24,7 +24,7 @@ export async function getAllQuotes(
   }
 
   if (q) {
-    const term = q.replace(/'/g, "''");
+    const term = q.trim().slice(0, 200);
     query = query.or(
       `quote_vi.ilike.%${term}%,quote_en.ilike.%${term}%,author.ilike.%${term}%`
     );

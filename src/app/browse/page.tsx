@@ -15,7 +15,7 @@ interface BrowseProps {
 async function BrowseContent({ searchParams }: BrowseProps) {
   const params = await searchParams;
   const { category, q, sort = 'newest', page = '1' } = params;
-  const currentPage = Math.max(1, parseInt(page));
+  const currentPage = Math.max(1, parseInt(page, 10) || 1);
 
   const validSort = (sort === 'newest' || sort === 'oldest' || sort === 'most-voted')
     ? sort
