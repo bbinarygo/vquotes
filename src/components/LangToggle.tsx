@@ -8,11 +8,9 @@ export default function LangToggle() {
     <button
       onClick={toggleLang}
       aria-label={lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt'}
-      className="flex items-center gap-1 px-2 py-1 rounded text-xs font-medium min-h-[36px] transition-colors"
+      className="flex items-center justify-center px-3 py-1.5 rounded-lg border text-xs font-semibold min-h-[44px] transition-colors focus-ring border-sienna text-sienna bg-parchment hover:bg-sienna hover:text-cream"
     >
-      <span className={lang === 'vi' ? 'text-sienna font-semibold' : 'text-ink-faint'}>VI</span>
-      <span className="text-ink-faint">|</span>
-      <span className={lang === 'en' ? 'text-sienna font-semibold' : 'text-ink-faint'}>EN</span>
+      {lang === 'vi' ? 'VI' : 'EN'}
     </button>
   );
 }
