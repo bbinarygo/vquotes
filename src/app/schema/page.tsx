@@ -2,12 +2,18 @@ import { CATEGORY_LIST } from '@/constants/categories';
 import { TAG_LIST } from '@/constants/tags';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export default async function SchemaPage() {
   const lang = await getLang();
 
   return (
     <div className="max-w-3xl mx-auto space-y-12">
+      <Breadcrumb items={[
+        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('schema_title', lang) },
+      ]} />
+
       {/* Header */}
       <div>
         <h1 className="font-playfair text-4xl font-bold text-ink mb-2">

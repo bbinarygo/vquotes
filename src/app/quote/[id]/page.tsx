@@ -8,6 +8,7 @@ import UpvoteButton from '@/components/UpvoteButton';
 import CopyButton from '@/components/CopyButton';
 import MobileActionBar from '@/components/MobileActionBar';
 import QuoteDetailBadges from '@/components/QuoteDetailBadges';
+import Breadcrumb from '@/components/Breadcrumb';
 
 export async function generateStaticParams() {
   const { quotes } = await getAllQuotes({ pageSize: 10000 });
@@ -37,6 +38,12 @@ export default async function QuotePage({ params }: QuotePageProps) {
 
   return (
     <>
+      <Breadcrumb items={[
+        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: lang === 'vi' ? 'Khám phá' : 'Browse', href: '/browse' },
+        { label: quote.author },
+      ]} />
+
       <div className="max-w-2xl mx-auto space-y-8 pb-24 md:pb-0">
         {/* Quote block */}
         <div className="relative bg-white border-l-4 border-sienna rounded-r-xl px-8 pt-10 pb-8 shadow-card">

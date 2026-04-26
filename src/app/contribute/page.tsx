@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { GitPullRequest, MessageSquarePlus, Copy } from 'lucide-react';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
+import Breadcrumb from '@/components/Breadcrumb';
 
 const GITHUB_REPO = 'https://github.com/bbinarygo/vquotes';
 const GITHUB_NEW_ISSUE = `${GITHUB_REPO}/issues/new?template=new-quote.yml`;
@@ -25,6 +26,11 @@ export default async function ContributePage() {
 
   return (
     <div className="max-w-2xl mx-auto space-y-10">
+      <Breadcrumb items={[
+        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('contribute_title', lang) },
+      ]} />
+
       <div>
         <h1 className="font-playfair text-4xl font-bold text-ink mb-4">
           {t('contribute_title', lang)}

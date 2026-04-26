@@ -6,6 +6,7 @@ import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
 import QuoteCard from '@/components/QuoteCard';
 import FilterBar from '@/components/FilterBar';
+import Breadcrumb from '@/components/Breadcrumb';
 import { BookOpen, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const PAGE_SIZE = 20;
@@ -63,6 +64,11 @@ async function BrowseContent({ searchParams }: BrowseProps) {
 
   return (
     <div className="space-y-6">
+      <Breadcrumb items={[
+        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('browse_title', lang) },
+      ]} />
+
       <div className="flex items-baseline justify-between">
         <h1 className="font-playfair text-3xl font-bold text-ink">{t('browse_title', lang)}</h1>
         <p className="text-sm text-ink-faint">{displayTotal} {t('browse_count', lang)}</p>
