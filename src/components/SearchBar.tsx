@@ -31,7 +31,7 @@ export default function SearchBar() {
       </div>
       <button
         type="submit"
-        className="px-6 py-3 bg-sienna text-cream rounded-lg hover:bg-gold transition-colors font-medium text-sm whitespace-nowrap min-h-[44px]"
+        className="px-6 py-3 bg-sienna text-cream rounded-lg hover:bg-gold transition-colors font-medium text-sm whitespace-nowrap min-h-[44px] [touch-action:manipulation]"
       >
         {t('btn_search', lang)}
       </button>
