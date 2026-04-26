@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import { Playfair_Display, DM_Sans } from 'next/font/google';
 import { Suspense } from 'react';
 import Link from 'next/link';
-import { LanguageProvider } from '@/context/LanguageContext';
+import LayoutClientWrapper from '@/components/LayoutClientWrapper';
 import MobileNav from '@/components/MobileNav';
 import DesktopNav from '@/components/DesktopNav';
 import { getLang } from '@/lib/lang';
@@ -70,7 +70,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="vi" className={`${playfair.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-cream text-ink min-h-screen">
-        <LanguageProvider>
+        <LayoutClientWrapper>
           {/* Header */}
           <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur-sm border-b border-rule">
             <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
@@ -97,7 +97,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
               </Suspense>
             </div>
           </footer>
-        </LanguageProvider>
+        </LayoutClientWrapper>
       </body>
     </html>
   );
