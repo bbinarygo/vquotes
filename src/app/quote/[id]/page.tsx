@@ -48,14 +48,14 @@ export default async function QuotePage({ params }: QuotePageProps) {
         {/* Quote block */}
         <div className="relative bg-white border-l-4 border-sienna rounded-r-xl px-8 pt-10 pb-8 shadow-card">
           <span
-            className="absolute top-4 left-6 font-playfair text-8xl text-sienna leading-none select-none pointer-events-none"
-            style={{ opacity: 0.15 }}
+            className="absolute top-2 right-3 font-playfair text-8xl text-sienna leading-none select-none pointer-events-none"
+            style={{ opacity: 0.08 }}
             aria-hidden="true"
           >
             &ldquo;
           </span>
           {/* Vietnamese (always first) */}
-          <p className="font-playfair italic text-2xl md:text-3xl text-ink leading-relaxed mb-6 relative z-10">
+          <p className="font-playfair italic text-2xl md:text-3xl text-ink leading-[1.75] mb-6 relative z-10 max-w-[55ch]">
             {quote.quote_vi}
           </p>
           <div className="relative flex items-center gap-3 mb-6">
@@ -66,12 +66,12 @@ export default async function QuotePage({ params }: QuotePageProps) {
             <div className="flex-1 h-px bg-rule" />
           </div>
           {/* English */}
-          <p className="font-sans italic text-base md:text-lg text-ink-muted leading-relaxed mb-6">
+          <p className="font-sans italic text-base md:text-lg text-ink-muted leading-[1.70] mb-6 max-w-[60ch]">
             {quote.quote_en}
           </p>
           <hr className="border-rule mb-4" />
-          <p className="text-sm font-semibold uppercase tracking-wider text-sienna mb-1">
-            —— {quote.author}
+          <p className="text-sm font-semibold uppercase tracking-[0.1em] text-sienna mb-1">
+            — {quote.author}
           </p>
           <QuoteDetailBadges categories={quote.category} tags={quote.tags} />
         </div>
@@ -89,7 +89,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
               href={quote.source_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 mt-2 text-sm text-sienna hover:underline"
+              className="inline-flex items-center gap-1 mt-2 min-h-[32px] text-sm text-sienna hover:underline focus-ring rounded"
             >
               <ExternalLink size={13} />
               {t('detail_view_source', lang)}
@@ -105,7 +105,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             href={reportUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center gap-2 px-4 py-2.5 border border-rule rounded-full text-sm text-ink-muted hover:border-red-300 hover:text-red-500 transition-colors min-h-[44px]"
+            className="flex items-center gap-2 px-4 py-2.5 border border-rule rounded-full text-sm text-ink-muted hover:border-red-300 hover:text-red-500 transition-colors min-h-[44px] focus-ring"
           >
             <Flag size={15} /> {t('btn_report', lang)}
           </a>
@@ -113,7 +113,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             href={facebookUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-blue-600 hover:bg-blue-50 transition-colors"
+            className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-blue-600 hover:bg-blue-50 transition-colors focus-ring"
             aria-label={t('aria_facebook', lang)}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -122,7 +122,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
             href={xUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-ink hover:bg-parchment transition-colors"
+            className="flex items-center justify-center w-11 h-11 rounded-full border border-rule text-ink hover:bg-parchment transition-colors focus-ring"
             aria-label={t('aria_x', lang)}
           >
             <svg viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
@@ -131,7 +131,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
 
         {/* Verification note */}
         <div className="flex items-center gap-2 text-xs text-ink-faint">
-          <ShieldCheck size={14} />
+          <ShieldCheck size={14} aria-hidden="true" />
           <span>{t('detail_verified', lang)}</span>
         </div>
       </div>
