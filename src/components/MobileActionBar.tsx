@@ -6,7 +6,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { t } from '@/lib/i18n';
 
 interface MobileActionBarProps {
-  quoteId: string;
+  quoteId: number;
   voteCount: number;
   reportUrl: string;
   facebookUrl: string;

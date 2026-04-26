@@ -19,7 +19,7 @@ export type QuoteCategory =
   | 'philosophy';
 
 export interface Quote {
-  id: string;
+  id: number;
   quote_vi: string;
   quote_en: string;
   author: string;

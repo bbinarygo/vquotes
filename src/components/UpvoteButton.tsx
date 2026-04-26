@@ -5,7 +5,7 @@ import { useLanguage } from '@/context/LanguageContext';
 import { t } from '@/lib/i18n';
 
 interface UpvoteButtonProps {
-  quoteId: string;
+  quoteId: number;
   initialCount: number;
 }
 

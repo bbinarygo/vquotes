@@ -58,7 +58,7 @@ export const getAllQuotes = unstable_cache(
   { revalidate: 60 }
 );
 
-export async function getQuoteById(id: string): Promise<Quote | undefined> {
+export async function getQuoteById(id: number): Promise<Quote | undefined> {
   const { data, error } = await supabase
     .from('quotes')
     .select('*')

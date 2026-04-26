@@ -12,7 +12,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 
 export async function generateStaticParams() {
   const { quotes } = await getAllQuotes({ pageSize: 10000 });
-  return quotes.map(q => ({ id: q.id }));
+  return quotes.map(q => ({ id: String(q.id) }));
 }
 
 interface QuotePageProps {
@@ -25,7 +25,10 @@ const REPORT_FORM_URL = 'https://forms.gle/um8zQvheDqpPVRCBA';
 export default async function QuotePage({ params }: QuotePageProps) {
   const lang = await getLang();
   const { id } = await params;
-  const quote = await getQuoteById(id);
+  const quoteId = parseInt(id, 10);
+  if (isNaN(quoteId)) notFound();
+
+  const quote = await getQuoteById(quoteId);
   if (!quote) notFound();
 
   const voteCounts = await getVoteCounts([quote.id]);

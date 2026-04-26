@@ -6,7 +6,7 @@ const RATE_LIMIT_PER_HOUR = 10;
 
 export async function POST(request: NextRequest) {
   const { quote_id } = await request.json();
-  if (!quote_id || typeof quote_id !== 'string') {
+  if (!quote_id || typeof quote_id !== 'number') {
     return NextResponse.json({ error: 'Invalid quote_id' }, { status: 400 });
   }
 
