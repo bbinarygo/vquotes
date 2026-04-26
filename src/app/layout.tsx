@@ -70,34 +70,36 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="vi" className={`${playfair.variable} ${dmSans.variable}`} suppressHydrationWarning>
       <body className="font-sans bg-cream text-ink min-h-screen">
-        <LayoutClientWrapper>
-          {/* Header */}
-          <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur-sm border-b border-rule">
-            <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
-              <Link href="/" className="font-playfair text-2xl font-bold text-sienna tracking-tight">
-                VQuotes
-              </Link>
-              {/* Desktop nav */}
-              <DesktopNav />
-              {/* Mobile hamburger */}
-              <MobileNav />
-            </div>
-          </header>
+        <Suspense fallback={<div />}>
+          <LayoutClientWrapper>
+            {/* Header */}
+            <header className="sticky top-0 z-40 bg-cream/95 backdrop-blur-sm border-b border-rule">
+              <div className="max-w-5xl mx-auto px-4 h-16 flex items-center justify-between">
+                <Link href="/" className="font-playfair text-2xl font-bold text-sienna tracking-tight">
+                  VQuotes
+                </Link>
+                {/* Desktop nav */}
+                <DesktopNav />
+                {/* Mobile hamburger */}
+                <MobileNav />
+              </div>
+            </header>
 
-          {/* Main content */}
-          <main className="max-w-5xl mx-auto px-4 py-8 md:py-12">
-            {children}
-          </main>
+            {/* Main content */}
+            <main className="max-w-5xl mx-auto px-4 py-8 md:py-12">
+              {children}
+            </main>
 
-          {/* Footer */}
-          <footer className="bg-parchment border-t border-rule mt-16 py-12">
-            <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
-              <Suspense fallback={<div className="h-32" />}>
-                <FooterContent />
-              </Suspense>
-            </div>
-          </footer>
-        </LayoutClientWrapper>
+            {/* Footer */}
+            <footer className="bg-parchment border-t border-rule mt-16 py-12">
+              <div className="max-w-5xl mx-auto px-4 grid grid-cols-1 md:grid-cols-3 gap-8">
+                <Suspense fallback={<div className="h-32" />}>
+                  <FooterContent />
+                </Suspense>
+              </div>
+            </footer>
+          </LayoutClientWrapper>
+        </Suspense>
       </body>
     </html>
   );
