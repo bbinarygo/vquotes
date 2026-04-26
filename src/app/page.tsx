@@ -1,15 +1,16 @@
-import { getAllQuotes } from '@/lib/quotes';
+import { getAllQuotes, getDailyQuote } from '@/lib/quotes';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
 import { getVoteCounts } from '@/lib/vote';
 import QuoteCard from '@/components/QuoteCard';
 import SearchBar from '@/components/SearchBar';
 import CategoryGrid from '@/components/CategoryGrid';
+import HeroQuote from '@/components/HeroQuote';
 
 export default async function HomePage() {
   const lang = await getLang();
+  const dailyQuote = await getDailyQuote();
   const { quotes: allQuotes } = await getAllQuotes({ pageSize: 6 });
-  const heroQuote = allQuotes[0];
   const featured = allQuotes.slice(0, 6);
   const voteCounts = await getVoteCounts(featured.map(q => q.id));
 
@@ -30,21 +31,7 @@ export default async function HomePage() {
           {t('hero_title_1', lang)}<br />
           <span className="text-sienna italic">{t('hero_title_2', lang)}</span>
         </h1>
-        {heroQuote && (
-          <div className="relative max-w-2xl mx-auto mb-10 px-8">
-            <span
-              className="absolute -top-4 left-0 font-playfair text-8xl text-sienna leading-none select-none"
-              style={{ opacity: 0.12 }}
-              aria-hidden="true"
-            >
-              &ldquo;
-            </span>
-            <p className="font-playfair italic text-lg md:text-xl text-ink-muted leading-[1.7]">
-              {lang === 'vi' ? heroQuote.quote_vi : heroQuote.quote_en}
-            </p>
-            <p className="mt-3 text-sm text-ink-faint">— {heroQuote.author}</p>
-          </div>
-        )}
+        {dailyQuote && <HeroQuote quote={dailyQuote} />}
         <div className="flex justify-center px-4">
           <SearchBar />
         </div>
