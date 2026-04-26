@@ -26,7 +26,7 @@ export default function SearchBar() {
           value={query}
           onChange={e => setQuery(e.target.value)}
           placeholder={t('search_placeholder', lang)}
-          className="w-full pl-11 pr-4 py-3 bg-white border border-rule rounded-lg text-base text-ink placeholder:text-ink-faint focus:outline-none focus:border-sienna transition-colors"
+          className="w-full pl-11 pr-4 py-3 bg-white border border-rule rounded-lg text-base text-ink placeholder:text-ink-faint focus-ring focus:border-sienna transition-colors"
         />
       </div>
       <button
