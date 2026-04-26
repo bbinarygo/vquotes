@@ -1,6 +1,7 @@
 import { getAllQuotes } from '@/lib/quotes';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
+import { getVoteCounts } from '@/lib/vote';
 import QuoteCard from '@/components/QuoteCard';
 import SearchBar from '@/components/SearchBar';
 import CategoryGrid from '@/components/CategoryGrid';
@@ -10,6 +11,7 @@ export default async function HomePage() {
   const { quotes: allQuotes } = await getAllQuotes({ pageSize: 6 });
   const heroQuote = allQuotes[0];
   const featured = allQuotes.slice(0, 6);
+  const voteCounts = await getVoteCounts(featured.map(q => q.id));
 
   return (
     <div className="space-y-16 md:space-y-24">
@@ -58,7 +60,7 @@ export default async function HomePage() {
         </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {featured.map(q => (
-            <QuoteCard key={q.id} quote={q} />
+            <QuoteCard key={q.id} quote={q} voteCount={voteCounts[q.id] ?? 0} />
           ))}
         </div>
       </section>
