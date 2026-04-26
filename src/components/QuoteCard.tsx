@@ -1,5 +1,6 @@
 'use client';
 import Link from 'next/link';
+import { Heart } from 'lucide-react';
 import { Quote } from '@/types/quote';
 import { useLanguage } from '@/context/LanguageContext';
 import { CATEGORY_LIST } from '@/constants/categories';
@@ -32,7 +33,10 @@ export default function QuoteCard({ quote, voteCount = 0 }: QuoteCardProps) {
       <p className="text-sm font-medium text-ink-muted mb-1">— {quote.author}</p>
       <p className="text-xs text-ink-faint mb-4 line-clamp-1">{quote.source}</p>
       <div className="flex items-center gap-3 mt-auto">
-        <span className="text-xs text-sienna font-medium">{voteCount}</span>
+        <span className="flex items-center gap-1 text-xs text-sienna font-medium">
+          <Heart size={12} className="fill-sienna text-sienna" aria-hidden="true" />
+          {voteCount}
+        </span>
         <div className="flex flex-wrap gap-1">
           {quote.category.map(c => {
             const cat = CATEGORY_LIST.find(x => x.value === c);
