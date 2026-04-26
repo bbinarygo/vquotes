@@ -16,7 +16,7 @@ export default function MobileNav() {
       <button
         onClick={() => setOpen(!open)}
         aria-label={open ? t('nav_close', lang) : t('nav_open', lang)}
-        className="flex items-center justify-center w-11 h-11 text-ink-muted hover:text-sienna transition-colors"
+        className="flex items-center justify-center w-11 h-11 text-ink-muted hover:text-sienna transition-colors focus-ring rounded-lg"
       >
         {open ? <X size={22} /> : <Menu size={22} />}
       </button>
@@ -27,25 +27,25 @@ export default function MobileNav() {
             className="fixed inset-0 z-20"
             onClick={() => setOpen(false)}
           />
-          <nav className="absolute top-16 left-0 right-0 z-30 bg-cream border-b border-rule shadow-card px-6 py-4 flex flex-col gap-4">
+          <nav className="absolute top-16 left-0 right-0 z-30 bg-cream border-b border-rule shadow-card px-6 py-2 flex flex-col">
             <Link
               href="/browse"
               onClick={() => setOpen(false)}
-              className="text-base text-ink-muted hover:text-sienna transition-colors py-2 border-b border-rule"
+              className="flex items-center min-h-[44px] text-base text-ink-muted hover:text-sienna transition-colors border-b border-rule focus-ring"
             >
-              {t('nav_browse', lang)} / {t('nav_browse', lang === 'vi' ? 'en' : 'vi')}
+              {t('nav_browse', lang)}
             </Link>
             <Link
               href="/contribute"
               onClick={() => setOpen(false)}
-              className="text-base text-ink-muted hover:text-sienna transition-colors py-2 border-b border-rule"
+              className="flex items-center min-h-[44px] text-base text-ink-muted hover:text-sienna transition-colors border-b border-rule focus-ring"
             >
-              {t('nav_contribute', lang)} / {t('nav_contribute', lang === 'vi' ? 'en' : 'vi')}
+              {t('nav_contribute', lang)}
             </Link>
             <Link
               href="/schema"
               onClick={() => setOpen(false)}
-              className="text-base text-ink-muted hover:text-sienna transition-colors py-2"
+              className="flex items-center min-h-[44px] text-base text-ink-muted hover:text-sienna transition-colors focus-ring"
             >
               {t('nav_schema', lang)}
             </Link>
