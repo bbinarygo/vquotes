@@ -11,8 +11,8 @@ Dữ liệu được cấp phép mở (CC0) để ai cũng có thể sử dụng
 
 ---
 
-**How to contribute** → [CONTRIBUTING.md](CONTRIBUTING.md)
+**How to contribute** → [vquotes.vercel.app/contribute](https://vquotes.vercel.app/contribute)
 
 **Current quotes**: Browse the `/quotes/` folder
 
-**Official website** (coming soon)
+**Official website**: [vquotes.vercel.app](https://vquotes.vercel.app)
