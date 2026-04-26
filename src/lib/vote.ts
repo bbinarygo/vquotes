@@ -1,10 +1,7 @@
+import { unstable_cache } from 'next/cache';
 import { supabase } from '@/lib/supabase';
-import { cacheLife } from 'next/cache';
 
-export async function getVoteCounts(quoteIds: string[]): Promise<Record<string, number>> {
-  'use cache';
-  cacheLife('minutes');
-
+async function _getVoteCounts(quoteIds: string[]): Promise<Record<string, number>> {
   if (quoteIds.length === 0) return {};
   const { data } = await supabase
     .from('quote_stats')
@@ -14,3 +11,9 @@ export async function getVoteCounts(quoteIds: string[]): Promise<Record<string, 
   (data ?? []).forEach(row => { counts[row.quote_id] = row.vote_count; });
   return counts;
 }
+
+export const getVoteCounts = unstable_cache(
+  _getVoteCounts,
+  ['getVoteCounts'],
+  { revalidate: 60 }
+);
