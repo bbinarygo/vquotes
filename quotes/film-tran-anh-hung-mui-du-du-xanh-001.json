@@ -1,12 +1,17 @@
 {
-  "id": "film-tran-anh-hung-mui-du-du-xanh-001",
   "quote_vi": "Cuộc sống bình yên nhất là khi ta biết bằng lòng với những gì mình đang có.",
   "quote_en": "The most peaceful life is when we learn to be content with what we already have.",
   "author": "Trần Anh Hùng",
   "source": "Phim 'Mùi đu đủ xanh' (1993)",
   "source_url": null,
-  "category": ["film"],
-  "tags": ["peace", "contentment", "simplicity"],
+  "category": [
+    "film"
+  ],
+  "tags": [
+    "peace",
+    "contentment",
+    "simplicity"
+  ],
   "year": 1993,
   "verified": true,
   "contributor_github": null

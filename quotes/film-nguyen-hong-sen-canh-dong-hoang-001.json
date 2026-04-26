@@ -1,12 +1,17 @@
 {
-  "id": "film-nguyen-hong-sen-canh-dong-hoang-001",
   "quote_vi": "Trên mảnh đất này, dù bom đạn cày xới, con người vẫn bám lấy từng tấc đất mà sống.",
   "quote_en": "On this land, even as bombs and bullets tear through it, people still cling to every inch of soil to survive.",
   "author": "Nguyễn Hồng Sến",
   "source": "Phim 'Cánh đồng hoang' (1979)",
   "source_url": null,
-  "category": ["film"],
-  "tags": ["war", "resilience", "homeland"],
+  "category": [
+    "film"
+  ],
+  "tags": [
+    "war",
+    "resilience",
+    "homeland"
+  ],
   "year": 1979,
   "verified": true,
   "contributor_github": null

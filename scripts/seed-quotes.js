@@ -29,8 +29,8 @@ for (const file of files) {
   try {
     const raw = readFileSync(join(QUOTES_DIR, file), 'utf-8');
     const obj = JSON.parse(raw);
-    if (!obj.id) throw new Error('missing required field: id');
-    quotes.push(obj);
+    const { id, ...rest } = obj;
+    quotes.push(rest);
   } catch (err) {
     console.error(`[SKIP] ${file}: ${err.message}`);
     parseErrors++;
@@ -42,22 +42,18 @@ if (quotes.length === 0) {
   process.exit(1);
 }
 
-console.log(`Upserting ${quotes.length} quotes...`);
+console.log(`Inserting ${quotes.length} quotes...`);
 
 const { error } = await supabase
   .from('quotes')
-  .upsert(quotes, { onConflict: 'id' });
+  .insert(quotes);
 
 if (error) {
   console.error(`Supabase error: ${error.message}`);
   process.exit(1);
 }
 
-for (const quote of quotes) {
-  console.log(`[OK] ${quote.id}`);
-}
-
-console.log(`\nDone. ${quotes.length} upserted, ${parseErrors} skipped.`);
+console.log(`\nDone. ${quotes.length} inserted, ${parseErrors} skipped.`);
 
 if (parseErrors > 0) {
   process.exit(1);
