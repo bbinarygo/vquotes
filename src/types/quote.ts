@@ -13,7 +13,10 @@ export type QuoteCategory =
   | 'military'
   | 'religious'
   | 'athlete'
-  | 'entrepreneur';
+  | 'entrepreneur'
+  | 'entertainment'
+  | 'history'
+  | 'philosophy';
 
 export interface Quote {
   id: string;
