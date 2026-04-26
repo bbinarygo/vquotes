@@ -52,11 +52,11 @@ async function _getAllQuotes(
   };
 }
 
-export const getAllQuotes = unstable_cache(
-  _getAllQuotes,
-  ['getAllQuotes'],
+export const getAllQuotes = (opts: QuoteQueryOptions = {}) => unstable_cache(
+  async () => _getAllQuotes(opts),
+  ['getAllQuotes', JSON.stringify(opts)],
   { revalidate: 60 }
-);
+)();
 
 async function _getQuoteById(id: number): Promise<Quote | undefined> {
   const { data, error } = await supabase
@@ -69,48 +69,50 @@ async function _getQuoteById(id: number): Promise<Quote | undefined> {
   return data as Quote;
 }
 
-export const getQuoteById = unstable_cache(
-  async (id: number) => _getQuoteById(id),
-  ['getQuoteById'],
+export const getQuoteById = (id: number) => unstable_cache(
+  async () => _getQuoteById(id),
+  ['getQuoteById', id.toString()],
   { revalidate: 3600 }
-);
+)();
 
-export const getDailyQuote = unstable_cache(
-  async (): Promise<Quote | undefined> => {
-    // 1. Get current date seed (YYYYMMDD) in UTC
-    const now = new Date();
-    const seedStr = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1).toString().padStart(2, '0')}${now.getUTCDate().toString().padStart(2, '0')}`;
-    const seed = parseInt(seedStr, 10);
+export const getDailyQuote = () => {
+  const now = new Date();
+  const seedStr = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1).toString().padStart(2, '0')}${now.getUTCDate().toString().padStart(2, '0')}`;
 
-    // 2. Try to get featured quotes first (ordered by id)
-    const { data: featuredData } = await supabase
-      .from('quotes')
-      .select('id')
-      .eq('featured', true)
-      .order('id');
+  return unstable_cache(
+    async (): Promise<Quote | undefined> => {
+      const seed = parseInt(seedStr, 10);
 
-    if (featuredData && featuredData.length > 0) {
-      const targetId = featuredData[seed % featuredData.length].id;
-      return getQuoteById(targetId);
-    }
+      // 1. Try to get featured quotes first (ordered by id)
+      const { data: featuredData } = await supabase
+        .from('quotes')
+        .select('id')
+        .eq('featured', true)
+        .order('id');
 
-    // 3. Fallback: pick from all quotes (ordered by id)
-    const { count } = await supabase
-      .from('quotes')
-      .select('*', { count: 'exact', head: true });
+      if (featuredData && featuredData.length > 0) {
+        const targetId = featuredData[seed % featuredData.length].id;
+        return getQuoteById(targetId);
+      }
 
-    if (!count) return undefined;
+      // 2. Fallback: pick from all quotes (ordered by id)
+      const { count } = await supabase
+        .from('quotes')
+        .select('*', { count: 'exact', head: true });
 
-    const targetOffset = seed % count;
-    const { data: fallbackData } = await supabase
-      .from('quotes')
-      .select('*')
-      .order('id')
-      .range(targetOffset, targetOffset)
-      .single();
+      if (!count) return undefined;
 
-    return fallbackData as Quote;
-  },
-  ['getDailyQuote'],
-  { revalidate: 86400 }
-);
+      const targetOffset = seed % count;
+      const { data: fallbackData } = await supabase
+        .from('quotes')
+        .select('*')
+        .order('id')
+        .range(targetOffset, targetOffset)
+        .single();
+
+      return fallbackData as Quote;
+    },
+    ['getDailyQuote', seedStr],
+    { revalidate: 86400 }
+  )();
+};
