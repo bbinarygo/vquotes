@@ -3,7 +3,7 @@ import { Playfair_Display, DM_Sans } from 'next/font/google';
 import Link from 'next/link';
 import { LanguageProvider } from '@/context/LanguageContext';
 import MobileNav from '@/components/MobileNav';
-import LangToggle from '@/components/LangToggle';
+import DesktopNav from '@/components/DesktopNav';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
 import './globals.css';
@@ -39,17 +39,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 VQuotes
               </Link>
               {/* Desktop nav */}
-              <nav className="hidden md:flex items-center gap-1 text-sm text-ink-muted">
-                <Link href="/browse" className="px-3 py-2 hover:text-sienna transition-colors rounded">
-                  {t('nav_browse', lang)}
-                </Link>
-                <span className="text-rule mx-1">|</span>
-                <Link href="/contribute" className="px-3 py-2 hover:text-sienna transition-colors rounded">
-                  {t('nav_contribute', lang)}
-                </Link>
-                <span className="text-rule mx-1">|</span>
-                <LangToggle />
-              </nav>
+              <DesktopNav />
               {/* Mobile hamburger */}
               <MobileNav />
             </div>
