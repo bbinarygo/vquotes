@@ -16,4 +16,7 @@ export const CATEGORY_LIST: { value: QuoteCategory; label: string; labelVi: stri
   { value: 'religious', label: 'Religious', labelVi: 'Tôn giáo', emoji: '🕊️' },
   { value: 'athlete', label: 'Athlete', labelVi: 'Vận động viên', emoji: '🏆' },
   { value: 'entrepreneur', label: 'Entrepreneur', labelVi: 'Doanh nhân', emoji: '💼' },
+  { value: 'entertainment', label: 'Entertainment', labelVi: 'Giải trí', emoji: '🎭' },
+  { value: 'history', label: 'History', labelVi: 'Lịch sử', emoji: '⌛' },
+  { value: 'philosophy', label: 'Philosophy', labelVi: 'Triết học', emoji: '🧠' },
 ];
