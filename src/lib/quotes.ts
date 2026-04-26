@@ -1,5 +1,6 @@
 import { supabase } from '@/lib/supabase';
 import { Quote } from '@/types/quote';
+import { cacheLife } from 'next/cache';
 
 export interface QuoteQueryOptions {
   category?: string;
@@ -12,6 +13,9 @@ export interface QuoteQueryOptions {
 export async function getAllQuotes(
   opts: QuoteQueryOptions = {}
 ): Promise<{ quotes: Quote[]; total: number }> {
+  'use cache';
+  cacheLife('minutes');
+
   const { category, q, sort = 'newest', page = 1, pageSize = 20 } = opts;
   const offset = (page - 1) * pageSize;
 
@@ -35,7 +39,6 @@ export async function getAllQuotes(
   } else if (sort === 'oldest') {
     query = query.order('year', { ascending: true, nullsFirst: false });
   }
-  // 'most-voted' sort is handled in the browse page after fetching vote counts
 
   if (sort !== 'most-voted') {
     query = query.range(offset, offset + pageSize - 1);
