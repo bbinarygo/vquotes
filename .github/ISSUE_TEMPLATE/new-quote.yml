@@ -59,6 +59,9 @@ body:
         - religious
         - athlete
         - entrepreneur
+        - entertainment
+        - history
+        - philosophy
     validations:
       required: true
 
