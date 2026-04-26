@@ -5,12 +5,29 @@ export default function LangToggle() {
   const { lang, toggleLang } = useLanguage();
 
   return (
-    <button
-      onClick={toggleLang}
-      aria-label={lang === 'vi' ? 'Switch to English' : 'Chuyển sang tiếng Việt'}
-      className="flex items-center justify-center px-3 py-1.5 rounded-lg border text-xs font-semibold min-h-[44px] transition-colors focus-ring border-sienna text-sienna bg-parchment hover:bg-sienna hover:text-cream"
-    >
-      {lang === 'vi' ? 'VI' : 'EN'}
-    </button>
+    <div className="flex border border-sienna rounded-lg overflow-hidden text-xs font-semibold">
+      <button
+        onClick={() => lang !== 'vi' && toggleLang()}
+        aria-pressed={lang === 'vi'}
+        className={`px-3 py-1.5 min-h-[44px] transition-colors focus-ring ${
+          lang === 'vi'
+            ? 'bg-sienna text-cream'
+            : 'bg-parchment text-sienna hover:bg-sienna/10'
+        }`}
+      >
+        VI
+      </button>
+      <button
+        onClick={() => lang !== 'en' && toggleLang()}
+        aria-pressed={lang === 'en'}
+        className={`px-3 py-1.5 min-h-[44px] transition-colors focus-ring ${
+          lang === 'en'
+            ? 'bg-sienna text-cream'
+            : 'bg-parchment text-sienna hover:bg-sienna/10'
+        }`}
+      >
+        EN
+      </button>
+    </div>
   );
 }
