@@ -12,7 +12,7 @@
   --color-gold: #92400E;
   --color-rule: #D6CFC7;
 
-  /* Fonts — filled in Task 2 after next/font generates variable names */
+  /* Fonts */
   --font-playfair: var(--font-playfair-display);
   --font-sans: var(--font-dm-sans);
 
@@ -28,13 +28,36 @@ body {
   overflow-x: hidden;
 }
 
-/* Hide scrollbar utility for horizontal scroll on mobile */
+h1, h2 {
+  text-wrap: balance;
+  letter-spacing: -0.02em;
+}
+
+/* Respect reduced-motion preference */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+  }
+}
+
 @layer utilities {
+  /* Hide scrollbar utility for horizontal scroll on mobile */
   .no-scrollbar::-webkit-scrollbar {
     display: none;
   }
   .no-scrollbar {
     -ms-overflow-style: none;
     scrollbar-width: none;
+  }
+
+  /* Shared focus ring — use on all interactive elements */
+  .focus-ring {
+    @apply focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sienna/25;
+  }
+
+  /* Touch target floor */
+  .touch-target {
+    @apply min-h-[44px] min-w-[44px];
   }
 }
