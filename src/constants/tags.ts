@@ -20,6 +20,14 @@ export const TAG_LIST: TagEntry[] = [
   { value: 'gratitude',   label: 'Gratitude',   labelVi: 'Biết ơn' },
   { value: 'tradition',   label: 'Tradition',   labelVi: 'Truyền thống' },
   { value: 'wisdom',      label: 'Wisdom',      labelVi: 'Trí tuệ' },
+  { value: 'love',        label: 'Love',        labelVi: 'Tình yêu' },
+  { value: 'friendship',  label: 'Friendship',  labelVi: 'Tình bạn' },
+  { value: 'family',      label: 'Family',      labelVi: 'Gia đình' },
+  { value: 'hope',        label: 'Hope',        labelVi: 'Hy vọng' },
+  { value: 'spirituality',label: 'Spirituality',labelVi: 'Tâm linh' },
+  { value: 'youth',       label: 'Youth',       labelVi: 'Tuổi trẻ' },
+  { value: 'culture',     label: 'Culture',     labelVi: 'Văn hóa' },
+  { value: 'nature',      label: 'Nature',      labelVi: 'Thiên nhiên' },
 ];
 
 const TAG_MAP = new Map(TAG_LIST.map(t => [t.value, t]));
