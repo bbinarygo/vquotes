@@ -12,7 +12,7 @@ export default function CategoryGrid() {
         <Link
           key={cat.value}
           href={`/browse?category=${cat.value}`}
-          className="group flex flex-col justify-between bg-white border border-rule border-l-4 border-l-sienna rounded-r-lg p-4 transition-all duration-200 hover:bg-parchment hover:border-l-gold shadow-card"
+          className="group flex flex-col justify-between bg-white border border-rule border-l-4 border-l-sienna rounded-r-lg p-4 transition-[box-shadow,border-color,background-color] duration-200 hover:bg-parchment hover:border-l-gold shadow-card cursor-pointer focus-ring"
         >
           <p className="font-playfair font-bold text-base text-ink leading-tight mb-1 group-hover:text-sienna transition-colors">
             {lang === 'vi' ? cat.labelVi : cat.label}

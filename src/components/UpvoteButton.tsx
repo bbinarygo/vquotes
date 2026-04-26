@@ -41,7 +41,7 @@ export default function UpvoteButton({ quoteId, initialCount }: UpvoteButtonProp
       onClick={handleVote}
       disabled={voted || loading}
       aria-label={voted ? t('aria_upvoted', lang) : t('aria_upvote', lang)}
-      className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-all duration-200 min-h-[44px] ${
+      className={`flex items-center gap-2 px-5 py-2.5 rounded-full font-medium text-sm transition-[color,background-color,border-color,box-shadow] duration-200 min-h-[44px] focus-ring ${
         loading ? 'opacity-60 cursor-wait' : ''
       } ${
         voted
