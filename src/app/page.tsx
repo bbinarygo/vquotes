@@ -24,7 +24,7 @@ export default async function HomePage() {
         <p className="text-xs font-medium uppercase tracking-[0.2em] text-ink-faint mb-6">
           {t('hero_tagline', lang)}
         </p>
-        <h1 className="font-playfair text-5xl md:text-7xl font-bold text-ink leading-tight mb-6">
+        <h1 className="font-playfair text-5xl md:text-7xl font-bold text-ink leading-tight mb-6 tracking-[-0.02em]">
           {t('hero_title_1', lang)}<br />
           <span className="text-sienna italic">{t('hero_title_2', lang)}</span>
         </h1>
@@ -32,12 +32,12 @@ export default async function HomePage() {
           <div className="relative max-w-2xl mx-auto mb-10 px-8">
             <span
               className="absolute -top-4 left-0 font-playfair text-8xl text-sienna leading-none select-none"
-              style={{ opacity: 0.2 }}
+              style={{ opacity: 0.12 }}
               aria-hidden="true"
             >
               &ldquo;
             </span>
-            <p className="font-playfair italic text-lg md:text-xl text-ink-muted leading-relaxed">
+            <p className="font-playfair italic text-lg md:text-xl text-ink-muted leading-[1.7]">
               {lang === 'vi' ? heroQuote.quote_vi : heroQuote.quote_en}
             </p>
             <p className="mt-3 text-sm text-ink-faint">— {heroQuote.author}</p>
