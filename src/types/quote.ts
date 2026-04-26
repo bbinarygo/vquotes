@@ -29,5 +29,6 @@ export interface Quote {
   tags: string[];
   year: number | null;
   verified: boolean;
+  featured: boolean;
   contributor_github: string | null;
 }
