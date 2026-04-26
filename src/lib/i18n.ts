@@ -62,6 +62,14 @@ const translations = {
   contribute_json_label:    { vi: 'Định dạng JSON:',         en: 'JSON format:' },
   contribute_schema_link:   { vi: 'Xem danh sách thể loại và tag →', en: 'View category and tag reference →' },
 
+  contribute_via_form:         { vi: 'Qua Google Form',          en: 'Via Google Form' },
+  contribute_via_form_desc:    { vi: 'Nhanh chóng, ẩn danh, không cần tài khoản. Phù hợp cho đóng góp đơn lẻ.', en: 'Fast, anonymous, no account required. Best for single contributions.' },
+  contribute_form_btn:         { vi: 'Mở Google Form →',       en: 'Open Google Form →' },
+  contribute_via_github:       { vi: 'Qua GitHub Issues',       en: 'Via GitHub Issues' },
+  contribute_via_github_desc:  { vi: 'Dành cho người dùng GitHub. Bạn có thể theo dõi tiến độ xét duyệt công khai.', en: 'For GitHub users. You can track the review progress publicly.' },
+  contribute_advanced_label:   { vi: 'Bạn là nhà phát triển?',   en: 'Are you a developer?' },
+  contribute_advanced_pr:      { vi: 'Gửi Pull Request trực tiếp (JSON) →', en: 'Submit a direct Pull Request (JSON) →' },
+
   // Schema page
   schema_title:        { vi: 'Schema tham khảo',   en: 'Reference Schema' },
   schema_categories:   { vi: 'Thể loại',            en: 'Categories' },
