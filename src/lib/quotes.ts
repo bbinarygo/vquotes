@@ -68,3 +68,42 @@ export async function getQuoteById(id: number): Promise<Quote | undefined> {
   if (error) return undefined;
   return data as Quote;
 }
+
+export const getDailyQuote = unstable_cache(
+  async (): Promise<Quote | undefined> => {
+    // 1. Get current date seed (YYYYMMDD)
+    const now = new Date();
+    const seed = parseInt(
+      `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`
+    );
+
+    // 2. Try to get featured quotes first
+    const { data: featuredData } = await supabase
+      .from('quotes')
+      .select('id')
+      .eq('featured', true);
+
+    if (featuredData && featuredData.length > 0) {
+      const targetId = featuredData[seed % featuredData.length].id;
+      return getQuoteById(targetId);
+    }
+
+    // 3. Fallback: pick from all quotes
+    const { count } = await supabase
+      .from('quotes')
+      .select('*', { count: 'exact', head: true });
+
+    if (!count) return undefined;
+
+    const targetOffset = seed % count;
+    const { data: fallbackData } = await supabase
+      .from('quotes')
+      .select('*')
+      .range(targetOffset, targetOffset)
+      .single();
+
+    return fallbackData as Quote;
+  },
+  ['getDailyQuote'],
+  { revalidate: 86400 } // 24 hours
+);
