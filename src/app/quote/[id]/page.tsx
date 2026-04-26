@@ -35,7 +35,7 @@ export default async function QuotePage({ params }: QuotePageProps) {
   const voteCount = voteCounts[quote.id] ?? 0;
 
   const quoteUrl = `${SITE_URL}/quote/${quote.id}`;
-  const reportUrl = `${REPORT_FORM_URL}?entry.QUOTE_ID=${encodeURIComponent(quote.id)}&entry.QUOTE_URL=${encodeURIComponent(quoteUrl)}`;
+  const reportUrl = `${REPORT_FORM_URL}?entry.QUOTE_ID=${encodeURIComponent(String(quote.id))}&entry.QUOTE_URL=${encodeURIComponent(quoteUrl)}`;
   const facebookUrl = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(quoteUrl)}`;
   const xUrl = `https://x.com/intent/tweet?text=${encodeURIComponent(`"${quote.quote_vi}" — ${quote.author}`)}&url=${encodeURIComponent(quoteUrl)}`;
 
