@@ -58,7 +58,7 @@ export const getAllQuotes = unstable_cache(
   { revalidate: 60 }
 );
 
-export async function getQuoteById(id: number): Promise<Quote | undefined> {
+async function _getQuoteById(id: number): Promise<Quote | undefined> {
   const { data, error } = await supabase
     .from('quotes')
     .select('*')
@@ -69,26 +69,32 @@ export async function getQuoteById(id: number): Promise<Quote | undefined> {
   return data as Quote;
 }
 
+export const getQuoteById = unstable_cache(
+  async (id: number) => _getQuoteById(id),
+  ['getQuoteById'],
+  { revalidate: 3600 }
+);
+
 export const getDailyQuote = unstable_cache(
   async (): Promise<Quote | undefined> => {
-    // 1. Get current date seed (YYYYMMDD)
+    // 1. Get current date seed (YYYYMMDD) in UTC
     const now = new Date();
-    const seed = parseInt(
-      `${now.getFullYear()}${(now.getMonth() + 1).toString().padStart(2, '0')}${now.getDate().toString().padStart(2, '0')}`
-    );
+    const seedStr = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1).toString().padStart(2, '0')}${now.getUTCDate().toString().padStart(2, '0')}`;
+    const seed = parseInt(seedStr, 10);
 
-    // 2. Try to get featured quotes first
+    // 2. Try to get featured quotes first (ordered by id)
     const { data: featuredData } = await supabase
       .from('quotes')
       .select('id')
-      .eq('featured', true);
+      .eq('featured', true)
+      .order('id');
 
     if (featuredData && featuredData.length > 0) {
       const targetId = featuredData[seed % featuredData.length].id;
       return getQuoteById(targetId);
     }
 
-    // 3. Fallback: pick from all quotes
+    // 3. Fallback: pick from all quotes (ordered by id)
     const { count } = await supabase
       .from('quotes')
       .select('*', { count: 'exact', head: true });
@@ -99,11 +105,12 @@ export const getDailyQuote = unstable_cache(
     const { data: fallbackData } = await supabase
       .from('quotes')
       .select('*')
+      .order('id')
       .range(targetOffset, targetOffset)
       .single();
 
     return fallbackData as Quote;
   },
   ['getDailyQuote'],
-  { revalidate: 86400 } // 24 hours
+  { revalidate: 86400 }
 );
