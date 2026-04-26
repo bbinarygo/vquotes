@@ -1,25 +1,12 @@
 import Link from 'next/link';
-import { GitPullRequest, MessageSquarePlus, Copy } from 'lucide-react';
+import { GitPullRequest, MessageSquarePlus } from 'lucide-react';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
 import Breadcrumb from '@/components/Breadcrumb';
 
 const GITHUB_REPO = 'https://github.com/bbinarygo/vquotes';
 const GITHUB_NEW_ISSUE = `${GITHUB_REPO}/issues/new?template=new-quote.yml`;
-
-const JSON_EXAMPLE = `{
-  "id": "film-ten-dao-dien-001",
-  "quote_vi": "Nguyên văn tiếng Việt",
-  "quote_en": "English translation",
-  "author": "Tên tác giả",
-  "source": "Tên tác phẩm (năm)",
-  "source_url": "https://example.com/source",
-  "category": ["film"],
-  "tags": ["tag1", "tag2"],
-  "year": 2023,
-  "verified": true,
-  "contributor_github": "username"
-}`;
+const GOOGLE_FORM_URL = 'https://forms.gle/placeholder';
 
 export default async function ContributePage() {
   const lang = await getLang();
@@ -48,62 +35,60 @@ export default async function ContributePage() {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+        {/* Card 1: Google Form */}
         <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
           <MessageSquarePlus size={28} className="text-sienna" />
           <div>
             <h2 className="font-playfair text-xl font-bold text-ink mb-2">
-              {t('contribute_via_issues', lang)}
+              {t('contribute_via_form', lang)}
             </h2>
             <p className="text-sm text-ink-muted leading-relaxed">
-              {t('contribute_via_issues_desc', lang)}
+              {t('contribute_via_form_desc', lang)}
+            </p>
+          </div>
+          <a
+            href={GOOGLE_FORM_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 bg-sienna text-cream rounded-lg hover:bg-gold transition-colors text-sm font-medium min-h-[44px]"
+          >
+            {t('contribute_form_btn', lang)}
+          </a>
+        </div>
+
+        {/* Card 2: GitHub Issues */}
+        <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
+          <GitPullRequest size={28} className="text-sienna" />
+          <div>
+            <h2 className="font-playfair text-xl font-bold text-ink mb-2">
+              {t('contribute_via_github', lang)}
+            </h2>
+            <p className="text-sm text-ink-muted leading-relaxed">
+              {t('contribute_via_github_desc', lang)}
             </p>
           </div>
           <a
             href={GITHUB_NEW_ISSUE}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 bg-sienna text-cream rounded-lg hover:bg-gold transition-colors text-sm font-medium min-h-[44px]"
+            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 border border-sienna text-sienna rounded-lg hover:bg-sienna hover:text-cream transition-colors text-sm font-medium min-h-[44px]"
           >
             {t('contribute_submit_btn', lang)}
           </a>
         </div>
+      </div>
 
-        <div className="bg-white border border-rule rounded-xl p-6 flex flex-col gap-4 shadow-card">
-          <GitPullRequest size={28} className="text-sienna" />
-          <div>
-            <h2 className="font-playfair text-xl font-bold text-ink mb-2">
-              {t('contribute_via_pr', lang)}
-            </h2>
-            <p className="text-sm text-ink-muted leading-relaxed">
-              {t('contribute_via_pr_desc', lang)}
-            </p>
-          </div>
+      <div className="pt-4 border-t border-rule text-center">
+        <p className="text-sm text-ink-muted">
+          {t('contribute_advanced_label', lang)}{' '}
           <a
             href={GITHUB_REPO}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-auto inline-flex items-center justify-center px-5 py-2.5 border border-sienna text-sienna rounded-lg hover:bg-sienna hover:text-cream transition-colors text-sm font-medium min-h-[44px]"
+            className="text-sienna hover:underline font-medium"
           >
-            {t('contribute_view_repo', lang)}
+            {t('contribute_advanced_pr', lang)}
           </a>
-        </div>
-      </div>
-
-      <div>
-        <p className="text-sm font-semibold text-ink-muted mb-3">{t('contribute_json_label', lang)}</p>
-        <div className="relative bg-ink rounded-xl overflow-hidden">
-          <div className="flex items-center justify-between px-4 py-2 border-b border-white/10">
-            <span className="text-xs text-white/40 font-mono">quotes/example-001.json</span>
-            <Copy size={14} className="text-white/30" />
-          </div>
-          <pre className="px-5 py-4 text-xs font-mono text-cream/80 overflow-x-auto leading-relaxed">
-            {JSON_EXAMPLE}
-          </pre>
-        </div>
-        <p className="mt-4 text-sm text-ink-muted">
-          <Link href="/schema" className="text-sienna hover:underline">
-            {t('contribute_schema_link', lang)}
-          </Link>
         </p>
       </div>
     </div>
