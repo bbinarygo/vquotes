@@ -42,8 +42,8 @@ export default async function QuotePage({ params }: QuotePageProps) {
   return (
     <>
       <Breadcrumb items={[
-        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
-        { label: lang === 'vi' ? 'Khám phá' : 'Browse', href: '/browse' },
+        { label: t('breadcrumb_home', lang), href: '/' },
+        { label: t('breadcrumb_browse', lang), href: '/browse' },
         { label: quote.author },
       ]} />
 

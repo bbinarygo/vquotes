@@ -42,7 +42,7 @@ body:
     id: source_url
     attributes:
       label: Link nguồn / Source URL (tùy chọn / optional)
-      description: Link IMDb, Goodreads, hoặc bài báo xác minh / Link to IMDb, Goodreads, or verifying article
+      description: Link bất kỳ, ưu tiên link đã được xác minh / Any link, but prioritize verified links
 
   - type: dropdown
     id: category

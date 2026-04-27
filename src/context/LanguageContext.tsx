@@ -1,5 +1,6 @@
 'use client';
 import { createContext, useContext, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import type { Lang } from '@/lib/i18n';
 
 interface LanguageContextValue {
@@ -20,12 +21,14 @@ function getInitialLang(): Lang {
 
 export function LanguageProvider({ children }: { children: React.ReactNode }) {
   const [lang, setLang] = useState<Lang>(getInitialLang);
+  const router = useRouter();
 
   function toggleLang() {
     const next: Lang = lang === 'vi' ? 'en' : 'vi';
     setLang(next);
     localStorage.setItem('vquotes-lang', next);
     document.cookie = `vquotes-lang=${next}; path=/; SameSite=Lax; max-age=31536000`;
+    router.refresh();
   }
 
   return (

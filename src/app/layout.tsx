@@ -59,7 +59,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   {t('footer_tagline', lang)}
                 </p>
                 <span className="inline-block mt-3 text-xs border border-rule rounded px-2 py-0.5 text-ink-faint">
-                  CC0 — Public Domain
+                  {t('footer_license', lang)}
                 </span>
               </div>
               <div>
@@ -69,10 +69,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <ul className="space-y-2 text-sm text-ink-muted">
                   <li><Link href="/browse" className="hover:text-sienna transition-colors">{t('footer_browse', lang)}</Link></li>
                   <li><Link href="/contribute" className="hover:text-sienna transition-colors">{t('footer_contribute', lang)}</Link></li>
-                  <li><Link href="/schema" className="hover:text-sienna transition-colors">Schema</Link></li>
+                  <li><Link href="/schema" className="hover:text-sienna transition-colors">{t('footer_schema', lang)}</Link></li>
                   <li>
                     <a href="https://github.com/bbinarygo/vquotes" target="_blank" rel="noopener noreferrer" className="hover:text-sienna transition-colors">
-                      GitHub →
+                      {t('footer_github', lang)}
                     </a>
                   </li>
                 </ul>

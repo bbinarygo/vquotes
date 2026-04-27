@@ -66,13 +66,15 @@ async function BrowseContent({ searchParams }: BrowseProps) {
   return (
     <div className="space-y-6">
       <Breadcrumb items={[
-        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('breadcrumb_home', lang), href: '/' },
         { label: t('browse_title', lang) },
       ]} />
 
       <div className="flex items-baseline justify-between">
         <h1 className="font-playfair text-3xl font-bold text-ink">{t('browse_title', lang)}</h1>
-        <p className="text-sm text-ink-faint">{displayTotal} {t('browse_count', lang)}</p>
+        <p className="text-sm text-ink-faint">
+          {displayTotal} {displayTotal === 1 ? t('browse_count_single', lang) : t('browse_count_plural', lang)}
+        </p>
       </div>
 
       <div className="flex gap-6">

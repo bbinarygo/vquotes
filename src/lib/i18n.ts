@@ -26,6 +26,8 @@ const translations = {
   // Browse page
   browse_title:      { vi: 'Khám phá',                        en: 'Browse' },
   browse_count:      { vi: 'trích dẫn',                       en: 'quotes' },
+  browse_count_single: { vi: 'trích dẫn',                       en: 'quote' },
+  browse_count_plural: { vi: 'trích dẫn',                       en: 'quotes' },
   filter_all:        { vi: 'Tất cả',                          en: 'All' },
   sort_newest:       { vi: 'Mới nhất',                        en: 'Newest' },
   sort_most_voted:   { vi: 'Nhiều thích nhất',                en: 'Most Liked' },
@@ -83,8 +85,15 @@ const translations = {
   footer_links:     { vi: 'Liên kết',    en: 'Links' },
   footer_browse:    { vi: 'Khám phá trích dẫn', en: 'Browse quotes' },
   footer_contribute:{ vi: 'Đóng góp',   en: 'Contribute' },
+  footer_schema:    { vi: 'Lược đồ',     en: 'Schema' },
+  footer_github:    { vi: 'GitHub →',   en: 'GitHub →' },
+  footer_license:   { vi: 'CC0 — Miền công cộng', en: 'CC0 — Public Domain' },
   footer_about:     { vi: 'Về dự án',   en: 'About' },
   footer_about_text:{ vi: 'Mọi trích dẫn được xác minh từ nguồn công khai. Dự án bảo tồn văn hóa, không phải nền tảng chính trị. Tuân thủ pháp luật Việt Nam.', en: 'All quotes are verified from public sources. A cultural preservation project, not a political platform. Compliant with Vietnamese law.' },
+
+  // Breadcrumbs
+  breadcrumb_home:   { vi: 'Trang chủ', en: 'Home' },
+  breadcrumb_browse: { vi: 'Khám phá', en: 'Browse' },
 
   // Accessibility
   aria_upvote:  { vi: 'Thích trích dẫn này', en: 'Like this quote' },

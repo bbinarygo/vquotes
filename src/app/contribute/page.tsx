@@ -1,4 +1,3 @@
-import Link from 'next/link';
 import { GitPullRequest, MessageSquarePlus } from 'lucide-react';
 import { getLang } from '@/lib/lang';
 import { t } from '@/lib/i18n';
@@ -6,7 +5,7 @@ import Breadcrumb from '@/components/Breadcrumb';
 
 const GITHUB_REPO = 'https://github.com/bbinarygo/vquotes';
 const GITHUB_NEW_ISSUE = `${GITHUB_REPO}/issues/new?template=new-quote.yml`;
-const GOOGLE_FORM_URL = 'https://forms.gle/placeholder';
+const GOOGLE_FORM_URL = 'https://forms.gle/DcjCrQe8oddU9EDu7';
 
 export default async function ContributePage() {
   const lang = await getLang();
@@ -14,7 +13,7 @@ export default async function ContributePage() {
   return (
     <div className="max-w-2xl mx-auto space-y-10">
       <Breadcrumb items={[
-        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('breadcrumb_home', lang), href: '/' },
         { label: t('contribute_title', lang) },
       ]} />
 

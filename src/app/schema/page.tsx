@@ -10,7 +10,7 @@ export default async function SchemaPage() {
   return (
     <div className="max-w-3xl mx-auto space-y-12">
       <Breadcrumb items={[
-        { label: lang === 'vi' ? 'Trang chủ' : 'Home', href: '/' },
+        { label: t('breadcrumb_home', lang), href: '/' },
         { label: t('schema_title', lang) },
       ]} />
 
