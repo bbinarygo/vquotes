@@ -3,7 +3,7 @@ import { NextRequest, NextResponse } from 'next/server';
 const VALID_LANGS = ['vi', 'en'] as const;
 type Lang = (typeof VALID_LANGS)[number];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const cookie = request.cookies.get('vquotes-lang')?.value;
   const lang: Lang = VALID_LANGS.includes(cookie as Lang) ? (cookie as Lang) : 'vi';
 
